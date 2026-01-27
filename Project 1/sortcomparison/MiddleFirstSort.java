@@ -1,6 +1,5 @@
 package sortcomparison;
 
-public class main {
-
+public class MiddleFirstSort {
     
 }
