@@ -14,22 +14,16 @@ public class LastQuickSort {
     }
     private static int Partition(int[] array, int first, int last){
         int pivot = array[last];
-        int lower = first;
-        int upper = last - 1;
+        int i = first - 1;
 
-        while(lower < upper){
-            while(lower <= upper && array[upper] >= pivot){
-                upper--;
-            }
-            while(lower <= upper && array[lower] <= pivot){
-                lower++;
-            }
-            if(lower < upper){
-                swap(array, lower, upper);
+        for(int j = first; j < last; j++){
+            if(array[j] <= pivot){
+                i++;
+                swap(array, i, j);
             }
         }
-        swap(array, lower, last);
-        return lower;
+        swap(array, i + 1, last);
+        return i + 1;
     }
     public static void main(String[] args){
         int[] a = {0,4,5,6,8,7,4,2};

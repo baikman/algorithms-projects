@@ -5,11 +5,11 @@ public class InsertionSort {
         for(int j = 1; j <array.length; j++){
             int key = array[j];
             int i = j-1;
-            while(i > 0 && array[i] > key){
+            while(i >= 0 && array[i] > key){
                 array[i+1] = array[i];
                 i--;
-                array[i+1] = key;
             }
+            array[i+1] = key;
         }
     }
     public static void main(String[] args){

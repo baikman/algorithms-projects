@@ -15,9 +15,7 @@ public class MiddleOfThreeQuickSort {
     }
     private static int Partition(int[] array, int first, int last){
     
-        int lower = first;
-        int upper = last - 1;
-        int middle = (first+last) / 2;
+        int middle = (first + last) / 2;
         int smallest = first;
         if(array[middle] < array[smallest]){
             smallest = middle;
@@ -26,24 +24,19 @@ public class MiddleOfThreeQuickSort {
             smallest = last;
         }
 
-
         //this swap places the element selected to be the pivot at the pivot position
         swap(array, last, smallest);
         int pivot = array[last];
+        int i = first - 1;
 
-        while(lower < upper){
-            while(lower <= upper && array[upper] >= pivot){
-                upper--;
-            }
-            while(lower <= upper && array[lower] <= pivot){
-                lower++;
-            }
-            if(lower < upper){
-                swap(array, lower, upper);
+        for(int j = first; j < last; j++){
+            if(array[j] <= pivot){
+                i++;
+                swap(array, i, j);
             }
         }
-        swap(array, lower, last);
-        return lower;
+        swap(array, i + 1, last);
+        return i + 1;
     }
     public static void main(String[] args){
         int[] a = {9,4,5,6,8,7,4,2};
