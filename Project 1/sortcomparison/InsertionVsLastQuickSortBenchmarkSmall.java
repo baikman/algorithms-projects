@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
-public class InsertionVsLastQuickSortBenchmark {
-    private static final int START_SIZE = 100;
-    private static final int END_SIZE = 10000;
-    private static final int STEP = 100;
+public class InsertionVsLastQuickSortBenchmarkSmall {
+    private static final int START_SIZE = 10;
+    private static final int END_SIZE = 1000;
+    private static final int STEP = 10;
     private static final Random RAND = new Random(42);
 
     enum DataType {
@@ -18,9 +18,9 @@ public class InsertionVsLastQuickSortBenchmark {
     }
 
     public static void main(String[] args) {
-        runBenchmark(DataType.FORWARD_SORTED, "insertion_vs_last_forward_sorted.csv");
-        runBenchmark(DataType.REVERSE_SORTED, "insertion_vs_last_reverse_sorted.csv");
-        runBenchmark(DataType.RANDOM, "insertion_vs_last_random.csv");
+        runBenchmark(DataType.FORWARD_SORTED, "insertion_vs_last_forward_sorted_small.csv");
+        runBenchmark(DataType.REVERSE_SORTED, "insertion_vs_last_reverse_sorted_small.csv");
+        runBenchmark(DataType.RANDOM, "insertion_vs_last_random_small.csv");
         System.out.println("Done. CSV files created.");
     }
 
