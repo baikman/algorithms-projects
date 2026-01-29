@@ -140,11 +140,11 @@ public class main {
         try (FileWriter w = new FileWriter(csv)) {
             w.write("DataType,ArraySize,Algorithm,TrialNumber,TimeMS\n");
             
-            runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 100, 10000, 100, "BENCHMARK 1: Insertion vs Last (100-10k, step 100)");
-            runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 10, 1000, 10, "BENCHMARK 2: Insertion vs Last (10-1k, step 10)");
-            runBenchmark(w, new String[]{"LastQuickSort", "TwoPointerQuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 3: Last vs OnePointer (10k-1M, step 10k)");
-            runBenchmark(w, new String[]{"LastQuickSort", "MiddleQuickSort", "MedianOf3QuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 4: Last vs Middle vs MedianOf3 (10k-1M, step 10k)");
-            runDataTypeBenchmark(w, "LastQuickSort", 10000, 1000000, 10000);
+            // runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 100, 10000, 100, "BENCHMARK 1: Insertion vs Last (100-10k, step 100)");
+            // runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 10, 1000, 10, "BENCHMARK 2: Insertion vs Last (10-1k, step 10)");
+            // runBenchmark(w, new String[]{"LastQuickSort", "TwoPointerQuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 3: Last vs OnePointer (10k-1M, step 10k)");
+            // runBenchmark(w, new String[]{"LastQuickSort", "MiddleQuickSort", "MedianOf3QuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 4: Last vs Middle vs MedianOf3 (10k-1M, step 10k)");
+            runDataTypeBenchmark(w, "LastQuickSort", 100, 10000, 100);
             
             System.out.println("\n" + "=".repeat(80));
             System.out.println("Benchmark Complete! Results saved to: " + csv);
