@@ -1,6 +1,6 @@
 package sortcomparison;
 
-public class TwoPointerQuickSort {
+public class OnePointerQuicksort {
     static void Quicksort(int[] array, int first, int last){
         if(first < last){
             int mid = Partition(array, first, last);
@@ -20,30 +20,17 @@ public class TwoPointerQuickSort {
      * Pointers start from both ends and move toward each other
      */
     private static int Partition(int[] array, int first, int last){
-        int pivot = array[first];
-        int left = first + 1;
-        int right = last;
-        
-        while(left <= right) {
-            // Find element from left that is >= pivot
-            while(left <= right && array[left] < pivot) {
-                left++;
-            }
-            // Find element from right that is <= pivot
-            while(left <= right && array[right] > pivot) {
-                right--;
-            }
-            // If pointers haven't crossed, swap
-            if(left <= right) {
-                swap(array, left, right);
-                left++;
-                right--;
+        int pivot = array[last];
+        int lowPointer = first - 1;
+        for(int ptr = first; ptr < last; ptr++){
+            if(array[ptr] <= pivot){
+                lowPointer = lowPointer + 1;
+                swap(array, lowPointer, ptr); 
             }
         }
-        
-        // Place pivot in correct position
-        swap(array, first, right);
-        return right;
+        lowPointer++;
+        swap(array, lowPointer, last);
+        return lowPointer;
     }
     
     public static void main(String[] args){

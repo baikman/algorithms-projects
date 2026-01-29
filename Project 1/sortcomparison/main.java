@@ -110,7 +110,7 @@ public class main {
                 MiddleOfThreeQuickSort.Quicksort(testArray, 0, testArray.length - 1);
                 break;
             case "TwoPointerQuickSort":
-                TwoPointerQuickSort.Quicksort(testArray, 0, testArray.length - 1);
+                OnePointerQuicksort.Quicksort(testArray, 0, testArray.length - 1);
                 break;
         }
         
