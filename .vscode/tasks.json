@@ -1,0 +1,18 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run: LastQuickSortDataTypeBenchmark with larger stack",
+			"type": "shell",
+			"command": "java",
+			"args": [
+				"-Xss256M",
+				"-cp",
+				"Project 1",
+				"sortcomparison.LastQuickSortDataTypeBenchmark"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}
