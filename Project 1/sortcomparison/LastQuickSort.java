@@ -3,8 +3,13 @@ public class LastQuickSort {
     static void Quicksort(int[] array, int first, int last){
         if(first < last){
             int mid = Partition(array, first, last);
-            Quicksort(array, first, mid-1);
-            Quicksort(array, mid+1, last);
+            if(mid - first < last - mid) {
+                Quicksort(array, first, mid - 1);
+                Quicksort(array, mid + 1, last);
+            } else {
+                Quicksort(array, mid + 1, last);
+                Quicksort(array, first, mid - 1);
+            }
         }
     }
     private static void swap(int[] array, int a, int b){

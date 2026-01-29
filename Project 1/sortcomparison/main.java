@@ -1,300 +1,156 @@
 package sortcomparison;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class main {
-    // Constants for testing
-    private static final int[] SIZES = generateSizes();
-    private static final int TRIALS = 5;  // Number of trials per test
-    private static final Random rand = new Random(42);  // Seed for reproducibility
-    
-    /**
-     * Generates size array: 100, 500, 1000, 5000, 10000, then 20000-1000000 by 10000 increments
-     */
-    static int[] generateSizes() {
-        java.util.List<Integer> sizes = new java.util.ArrayList<>();
-        sizes.add(100);
-        sizes.add(500);
-        sizes.add(1000);
-        sizes.add(5000);
-        sizes.add(10000);
-        for(int i = 20000; i <= 1000000; i += 10000) {
-            sizes.add(i);
-        }
-        int[] result = new int[sizes.size()];
-        for(int i = 0; i < sizes.size(); i++) {
-            result[i] = sizes.get(i);
-        }
-        return result;
-    }
+    private static final int TRIALS = 5;
+    private static final Random rand = new Random(42);
 
-    // Data type enum for different sorting scenarios
-    enum DataType {
-        RANDOM,          // Random unsorted data
-        FORWARD_SORTED,  // Already sorted in ascending order
-        REVERSE_SORTED   // Sorted in reverse (descending) order
-    }
+    enum DataType { RANDOM, FORWARD_SORTED, REVERSE_SORTED }
 
-    /**
-     * Generates test array based on data type
-     */
     static int[] generateArray(int size, DataType type) {
-        int[] array = new int[size];
-        
+        int[] arr = new int[size];
         switch(type) {
-            case RANDOM:
-                for(int i = 0; i < size; i++) {
-                    array[i] = rand.nextInt(10000);
-                }
-                break;
-                
-            case FORWARD_SORTED:
-                for(int i = 0; i < size; i++) {
-                    array[i] = i;
-                }
-                break;
-                
-            case REVERSE_SORTED:
-                for(int i = 0; i < size; i++) {
-                    array[i] = size - i;
-                }
-                break;
+            case RANDOM -> { for(int i = 0; i < size; i++) arr[i] = rand.nextInt(10000); }
+            case FORWARD_SORTED -> { for(int i = 0; i < size; i++) arr[i] = i; }
+            case REVERSE_SORTED -> { for(int i = 0; i < size; i++) arr[i] = size - i; }
         }
-        return array;
+        return arr;
     }
 
-    /**
-     * Creates a copy of an array
-     */
-    static int[] copyArray(int[] array) {
-        return Arrays.copyOf(array, array.length);
-    }
+    static int[] copyArray(int[] arr) { return Arrays.copyOf(arr, arr.length); }
 
-    /**
-     * Verifies that array is sorted correctly
-     */
-    static boolean isSorted(int[] array) {
-        for(int i = 0; i < array.length - 1; i++) {
-            if(array[i] > array[i+1]) {
-                return false;
-            }
-        }
+    static boolean isSorted(int[] arr) {
+        for(int i = 0; i < arr.length - 1; i++) if(arr[i] > arr[i+1]) return false;
         return true;
     }
 
-    /**
-     * Runs a single sort and returns time in nanoseconds
-     */
-    static long timeSortAlgorithm(int[] array, String algorithm) {
-        int[] testArray = copyArray(array);
-        
-        long startTime = System.nanoTime();
-        
-        // Call the appropriate sort algorithm
-        switch(algorithm) {
-            case "InsertionSort":
-                InsertionSort.Sort(testArray);
-                break;
-            case "LastQuickSort":
-                LastQuickSort.Quicksort(testArray, 0, testArray.length - 1);
-                break;
-            case "MiddleQuickSort":
-                MiddleQuickSort.Quicksort(testArray, 0, testArray.length - 1);
-                break;
-            case "MedianOf3QuickSort":
-                MiddleOfThreeQuickSort.Quicksort(testArray, 0, testArray.length - 1);
-                break;
-            case "TwoPointerQuickSort":
-                OnePointerQuicksort.Quicksort(testArray, 0, testArray.length - 1);
-                break;
+    static long timeSortAlgorithm(int[] arr, String algo) {
+        int[] test = copyArray(arr);
+        long start = System.nanoTime();
+        switch(algo) {
+            case "InsertionSort" -> InsertionSort.Sort(test);
+            case "LastQuickSort" -> LastQuickSort.Quicksort(test, 0, test.length - 1);
+            case "MiddleQuickSort" -> MiddleQuickSort.Quicksort(test, 0, test.length - 1);
+            case "MedianOf3QuickSort" -> MiddleOfThreeQuickSort.Quicksort(test, 0, test.length - 1);
+            case "TwoPointerQuickSort" -> OnePointerQuicksort.Quicksort(test, 0, test.length - 1);
         }
-        
-        long endTime = System.nanoTime();
-        
-        // Verify correctness
-        if(!isSorted(testArray)) {
-            System.err.println("ERROR: Array not properly sorted by " + algorithm);
-            return -1;
-        }
-        
-        return endTime - startTime;
+        long end = System.nanoTime();
+        if(!isSorted(test)) { System.err.println("ERROR: " + algo); return -1; }
+        return end - start;
     }
 
-    /**
-     * Runs multiple trials and returns average time in milliseconds
-     */
-    static double runBenchmark(int[] array, String algorithm, int trials) {
-        long totalTime = 0;
-        
-        for(int i = 0; i < trials; i++) {
-            long time = timeSortAlgorithm(array, algorithm);
-            if(time == -1) return -1;
-            totalTime += time;
-        }
-        
-        return totalTime / (double) trials / 1_000_000;  // Convert to milliseconds
+    static void writeCSVRecord(FileWriter w, String type, int size, String algo, int trial, double ms) throws IOException {
+        w.write(String.format("%s,%d,%s,%d,%.6f\n", type, size, algo, trial, ms));
     }
 
-    /**
-     * Writes CSV header to file
-     */
-    static void writeCSVHeader(FileWriter writer) throws IOException {
-        writer.write("DataType,ArraySize,Algorithm,TrialNumber,TimeMS\n");
-    }
-
-    /**
-     * Writes a single CSV record
-     */
-    static void writeCSVRecord(FileWriter writer, String dataType, int size, String algorithm, int trial, double timeMS) throws IOException {
-        writer.write(String.format("%s,%d,%s,%d,%.6f\n", dataType, size, algorithm, trial, timeMS));
-    }
-
-    /**
-     * Runs a complete benchmark suite with CSV output
-     */
-    static void runCompleteBenchmark() {
-        System.out.println("====================================================");
-        System.out.println("SORTING ALGORITHM PERFORMANCE ANALYSIS");
-        System.out.println("====================================================\n");
-
-        String[] algorithms = {"InsertionSort", "LastQuickSort", "MiddleQuickSort", "MedianOf3QuickSort", "TwoPointerQuickSort"};
-        DataType[] dataTypes = {DataType.RANDOM, DataType.FORWARD_SORTED, DataType.REVERSE_SORTED};
-        String[] typeNames = {"Random", "Forward-Sorted", "Reverse-Sorted"};
-
-        // Generate CSV filename with timestamp
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        String csvFilename = "benchmark_results_" + now.format(formatter) + ".csv";
+    static void runBenchmark(FileWriter w, String[] algos, DataType type, int start, int end, int step, String name) throws IOException {
+        System.out.println("\n" + name.toUpperCase());
+        System.out.println("-".repeat(80));
+        System.out.printf("%-15s", "Array Size");
+        for(String a : algos) System.out.printf("%-20s", a);
+        System.out.println();
         
-        try (FileWriter csvWriter = new FileWriter(csvFilename)) {
-            writeCSVHeader(csvWriter);
+        for(int size = start; size <= end; size += step) {
+            int[] arr = generateArray(size, type);
+            System.out.printf("%-15d", size);
             
-            // For each data type
-            for(int typeIdx = 0; typeIdx < dataTypes.length; typeIdx++) {
-                DataType dataType = dataTypes[typeIdx];
-                String typeName = typeNames[typeIdx];
-                
-                System.out.println("\n" + typeName.toUpperCase() + " DATA:");
-                System.out.println("-".repeat(100));
-                System.out.printf("%-15s", "Array Size");
-                for(String algo : algorithms) {
-                    System.out.printf("%-20s", algo);
+            for(String algo : algos) {
+                long total = 0;
+                boolean err = false;
+                for(int t = 1; t <= TRIALS; t++) {
+                    try {
+                        long time = timeSortAlgorithm(arr, algo);
+                        if(time == -1) { err = true; break; }
+                        total += time;
+                        writeCSVRecord(w, type.toString(), size, algo, t, time / 1e6);
+                    } catch (Exception e) { err = true; break; }
                 }
-                System.out.println();
-                System.out.println("-".repeat(100));
-
-                // Test each size
-                for(int size : SIZES) {
-                    int[] testArray = generateArray(size, dataType);
-                    System.out.printf("%-15d", size);
-                    
-                    // InsertionSort is O(n^2), skip after 10k
-                    boolean skipInsertion = size > 50000;
-                    // Only skip QuickSort variants on sorted data at extreme sizes to avoid worst case
-                    boolean skipQSOnSorted = (dataType == DataType.FORWARD_SORTED || dataType == DataType.REVERSE_SORTED) && size > 50000;
-                    
-                    for(String algo : algorithms) {
-                        // Skip InsertionSort after 10k
-                        if(skipInsertion && algo.equals("InsertionSort")) {
-                            System.out.printf("%-20s", "SKIPPED");
-                            continue;
-                        }
-                        // Skip QuickSort variants only on sorted data at extreme sizes
-                        if(skipQSOnSorted && (algo.equals("LastQuickSort") || algo.equals("MedianOf3QuickSort") || algo.equals("TwoPointerQuickSort"))) {
-                            System.out.printf("%-20s", "SKIPPED");
-                            continue;
-                        }
-                        
-                        // Run trials and record individual times
-                        long totalTime = 0;
-                        boolean hasError = false;
-                        for(int trial = 1; trial <= TRIALS; trial++) {
-                            try {
-                                long time = timeSortAlgorithm(testArray, algo);
-                                if(time == -1) {
-                                    hasError = true;
-                                    break;
-                                }
-                                double timeMS = time / 1_000_000.0;
-                                totalTime += time;
-                                writeCSVRecord(csvWriter, typeName, size, algo, trial, timeMS);
-                            } catch (StackOverflowError | Exception e) {
-                                System.err.println("\nWarning: " + algo + " failed on " + typeName + " size=" + size);
-                                hasError = true;
-                                break;
-                            }
-                        }
-                        
-                        double avgTime = totalTime / (double) TRIALS / 1_000_000;
-                        
-                        if(hasError) {
-                            System.out.printf("%-20s", "ERROR");
-                        } else if(avgTime < 1.0) {
-                            System.out.printf("%-20.4f", avgTime);
-                        } else if(avgTime < 1000.0) {
-                            System.out.printf("%-20.2f", avgTime);
-                        } else {
-                            System.out.printf("%-20.2f", avgTime);
-                        }
-                    }
-                    System.out.println();
-                }
+                double avg = total / (double)TRIALS / 1e6;
+                System.out.printf("%-20s", err ? "ERROR" : (avg < 1.0 ? String.format("%.4f", avg) : String.format("%.2f", avg)));
             }
-            
-            csvWriter.flush();
-            System.out.println("\n" + "=".repeat(100));
-            System.out.println("Benchmark Complete!");
-            System.out.println("Times shown in milliseconds (ms)");
-            System.out.println("CSV results saved to: " + csvFilename);
-            System.out.println("=".repeat(100));
-            
-        } catch (IOException e) {
-            System.err.println("Error writing to CSV file: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println();
         }
     }
 
-    /**
-     * Quick test to verify algorithms work correctly
-     */
+    static void runDataTypeBenchmark(FileWriter w, String algo, int start, int end, int step) throws IOException {
+        String[] types = {"Forward-Sorted", "Random", "Reverse-Sorted"};
+        DataType[] typeEnum = {DataType.FORWARD_SORTED, DataType.RANDOM, DataType.REVERSE_SORTED};
+        
+        System.out.println("\nBENCHMARK 5: " + algo + " - Forward vs Random vs Reverse (" + start + "-" + end + ", step " + step + ")");
+        System.out.println("-".repeat(80));
+        System.out.printf("%-15s", "Array Size");
+        for(String t : types) System.out.printf("%-20s", t);
+        System.out.println();
+        
+        for(int size = start; size <= end; size += step) {
+            System.out.printf("%-15d", size);
+            for(int t = 0; t < typeEnum.length; t++) {
+                int[] arr = generateArray(size, typeEnum[t]);
+                long total = 0;
+                boolean err = false;
+                for(int trial = 1; trial <= TRIALS; trial++) {
+                    try {
+                        long time = timeSortAlgorithm(arr, algo);
+                        if(time == -1) { err = true; break; }
+                        total += time;
+                        writeCSVRecord(w, types[t], size, algo, trial, time / 1e6);
+                    } catch (Exception e) { err = true; break; }
+                }
+                double avg = total / (double)TRIALS / 1e6;
+                System.out.printf("%-20s", err ? "ERROR" : (avg < 1.0 ? String.format("%.4f", avg) : String.format("%.2f", avg)));
+            }
+            System.out.println();
+        }
+    }
+
     static void quickTest() {
         System.out.println("Running quick verification tests...\n");
+        int[] data = {9, 4, 5, 6, 8, 7, 4, 2};
         
-        int[] testData = {9, 4, 5, 6, 8, 7, 4, 2};
-        
-        // Test InsertionSort
-        int[] arr = copyArray(testData);
-        InsertionSort.Sort(arr);
-        System.out.println("InsertionSort: " + (isSorted(arr) ? "PASS" : "FAIL"));
-        
-        // Test LastQuickSort
-        arr = copyArray(testData);
-        LastQuickSort.Quicksort(arr, 0, arr.length - 1);
-        System.out.println("LastQuickSort: " + (isSorted(arr) ? "PASS" : "FAIL"));
-        
-        // Test MiddleQuickSort
-        arr = copyArray(testData);
-        MiddleQuickSort.Quicksort(arr, 0, arr.length - 1);
-        System.out.println("MiddleQuickSort: " + (isSorted(arr) ? "PASS" : "FAIL"));
-        
-        // Test MiddleOfThreeQuickSort
-        arr = copyArray(testData);
-        MiddleOfThreeQuickSort.Quicksort(arr, 0, arr.length - 1);
-        System.out.println("MiddleOfThreeQuickSort: " + (isSorted(arr) ? "PASS" : "FAIL"));
-        
-        System.out.println("\nAll verification tests complete!\n");
+        String[] algos = {"InsertionSort", "LastQuickSort", "MiddleQuickSort", "MiddleOfThreeQuickSort"};
+        for(String algo : algos) {
+            int[] arr = copyArray(data);
+            switch(algo) {
+                case "InsertionSort" -> InsertionSort.Sort(arr);
+                case "LastQuickSort" -> LastQuickSort.Quicksort(arr, 0, arr.length - 1);
+                case "MiddleQuickSort" -> MiddleQuickSort.Quicksort(arr, 0, arr.length - 1);
+                case "MiddleOfThreeQuickSort" -> MiddleOfThreeQuickSort.Quicksort(arr, 0, arr.length - 1);
+            }
+            System.out.println(algo + ": " + (isSorted(arr) ? "PASS" : "FAIL"));
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        // Run quick tests first
         quickTest();
         
-        // Run full benchmark
-        runCompleteBenchmark();
+        System.out.println("====================================================");
+        System.out.println("SORTING ALGORITHM PERFORMANCE ANALYSIS");
+        System.out.println("====================================================");
+        
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        String csv = "benchmark_results_" + now.format(fmt) + ".csv";
+        
+        try (FileWriter w = new FileWriter(csv)) {
+            w.write("DataType,ArraySize,Algorithm,TrialNumber,TimeMS\n");
+            
+            runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 100, 10000, 100, "BENCHMARK 1: Insertion vs Last (100-10k, step 100)");
+            runBenchmark(w, new String[]{"InsertionSort", "LastQuickSort"}, DataType.RANDOM, 10, 1000, 10, "BENCHMARK 2: Insertion vs Last (10-1k, step 10)");
+            runBenchmark(w, new String[]{"LastQuickSort", "TwoPointerQuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 3: Last vs OnePointer (10k-1M, step 10k)");
+            runBenchmark(w, new String[]{"LastQuickSort", "MiddleQuickSort", "MedianOf3QuickSort"}, DataType.RANDOM, 10000, 1000000, 10000, "BENCHMARK 4: Last vs Middle vs MedianOf3 (10k-1M, step 10k)");
+            runDataTypeBenchmark(w, "LastQuickSort", 10000, 1000000, 10000);
+            
+            System.out.println("\n" + "=".repeat(80));
+            System.out.println("Benchmark Complete! Results saved to: " + csv);
+            System.out.println("=".repeat(80));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
