@@ -33,6 +33,7 @@ public class OnePointerQuicksort {
         return lowPointer;
     }
     
+	// Just for testing
     public static void main(String[] args){
         int[] a = {9,4,5,6,8,7,4,2};
         Quicksort(a,0,a.length-1);

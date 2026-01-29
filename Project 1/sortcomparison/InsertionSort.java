@@ -12,6 +12,8 @@ public class InsertionSort {
             array[i+1] = key;
         }
     }
+	
+	// Just for testing
     public static void main(String[] args){
         int[] a = {0,4,5,6,8,7,4,2};
         Sort(a);
