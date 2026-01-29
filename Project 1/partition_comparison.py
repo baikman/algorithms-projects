@@ -40,6 +40,23 @@ def main():
         plt.savefig('graphs/01_insertion_vs_last_100_10k.png', dpi=300, bbox_inches='tight')
         plt.close()
         print("✓ Saved: 01_insertion_vs_last_100_10k.png")
+        
+        # Benchmark 1 Zoom: Crossover point
+        b1_zoom = b1[b1['ArraySize'] <= 400]
+        b1_zoom_avg = b1_zoom.groupby(['ArraySize', 'Algorithm'])['TimeMS'].mean().reset_index()
+        fig, ax = plt.subplots(figsize=(12, 7))
+        for algo in ['InsertionSort', 'LastQuickSort']:
+            data = b1_zoom_avg[b1_zoom_avg['Algorithm'] == algo]
+            ax.plot(data['ArraySize'], data['TimeMS'], marker='o', label=algo, linewidth=2.5, markersize=8)
+        ax.set_xlabel('Array Size', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Time (ms)', fontsize=12, fontweight='bold')
+        ax.set_title('Benchmark 1 Zoom: Insertion vs Last QuickSort Crossover (0-400)', fontsize=13, fontweight='bold')
+        ax.legend(fontsize=11)
+        ax.grid(True, alpha=0.3)
+        plt.tight_layout()
+        plt.savefig('graphs/01b_insertion_vs_last_crossover.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        print("✓ Saved: 01b_insertion_vs_last_crossover.png")
     
     # Benchmark 2: Insertion vs Last (10-1k)
     b2 = df[(df['DataType'] == 'RANDOM') & (df['ArraySize'] <= 1000) & (df['ArraySize'] >= 10) & (df['Algorithm'].isin(['InsertionSort', 'LastQuickSort']))]

@@ -24,12 +24,12 @@ We implemented five sorting algorithms in separate Java classes: InsertionSort, 
 
 ## V. Testing
 
-The benchmark outputs individual trial times in CSV format for analysis. We observe expected algorithm behavior: InsertionSort 
+The benchmark outputs both console-formatted average times and individual trial times in CSV format for analysis. We observe expected algorithm behavior: InsertionSort dominates at larger sizes with O(n^2) complexity, while QuickSort variants perform better asymptotically. Notably, in Benchmark 2 (10-1k range) we observed several performance spikes in both algorithms, particularly pronounced in InsertionSort around every 10 increments in array size.
 
 ## VI. Summary/Conclusion
 
-
+This project successfully demonstrated that pivot selection strategy is the dominant factor in QuickSort performance, with the median-of-three and middle element selections providing more stable results than last-element pivot on random data. The crossover point between Insertion Sort and QuickSort occurs around 250 elements, below which simpler algorithms remain competitive despite worse asymptotic complexity. Lastly, the worst-case behavior of last-element pivot on pre-sorted data (forward and reverse) is clearly evident in Benchmark 5, with execution times increasing quadratically compared to random data performance.
 
 ## VII. AI Usage
 
-AI was used to generate the test method structure and CSV output formatting, which helped with the speed of the assignment. Additionally, we used AI to help us debug our implementations of the sorting algorithms
+AI was used to generate the test method structure and CSV output formatting, which helped with the speed of the assignment. Additionally, we used AI to help us debug our implementations of the sorting algorithms and generate a Python script we could modify to create graphs.
