@@ -1,9 +1,11 @@
 public class fullrecursion{
     static int numDenom = 4;
     static int[] Denom = {1,7,17,37};
-    static int NumCoins(Integer n){
+    
+    static CoinPurse NumCoins(Integer n){
+        CoinPurse BestPurse = new CoinPurse();
         if(n == 0){
-            return 0;
+            return BestPurse;
         }
         int bestNum = (int) Double.POSITIVE_INFINITY;
         Integer bestK = 0;
@@ -12,15 +14,26 @@ public class fullrecursion{
             if(newVal < 0){
                 break;
             }
-            Integer newCoins = NumCoins(newVal) + 1;
+            CoinPurse newPurse = NumCoins(newVal);
+            Integer newCoins = newPurse.totalCoins + 1;
             if(newCoins < bestNum){
                 bestNum = newCoins;
                 bestK = k;
+                for(int i = 0; i < numDenom; i++){
+                    BestPurse.purse[i] = newPurse.purse[i];
+                    BestPurse.totalCoins = newPurse.totalCoins + 1;
+                }           
             }
         }
-        return bestNum;
+        //NumCoins(n - bestK);
+        BestPurse.purse[bestK]++;
+        return BestPurse;
     }
     public static void main(String[] args) {
-        System.out.println(NumCoins(22));
+        CoinPurse totalPurse = NumCoins(22);
+        System.out.println("Total Coins: " + totalPurse.totalCoins);
+        for(int i = 0; i < numDenom; i ++){
+            System.out.println(Denom[i] + ": " + totalPurse.purse[i]);
+        }
     }
 }
