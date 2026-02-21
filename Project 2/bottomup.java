@@ -1,13 +1,21 @@
+import java.util.Scanner;
+
 public class bottomup {
-    static int numDenom = 4;
-    static int[] Denom = {1,7,17,37};
-    static int[][] array;
+    static int numDenom;
+    static int[] Denom;
+    static CoinPurse[] array;
+    static int numProblems;
+    static int[] problems;
+    static int size = 0;
 
     static CoinPurse NumCoins(Integer n){
-        CoinPurse BestPurse = new CoinPurse();
-        if(n == 0){
-            return BestPurse;
+        if (array[n] != null){
+            return array[n];
         }
+        CoinPurse BestPurse = new CoinPurse();
+        //if(n == 0){
+        //    return BestPurse;
+        //}
         int bestNum = (int) Double.POSITIVE_INFINITY;
         Integer bestK = 0;
         for(int k = 0; k < numDenom; k++){
@@ -28,9 +36,29 @@ public class bottomup {
         }
         //NumCoins(n - bestK);
         BestPurse.purse[bestK]++;
+        array[n] = BestPurse;
         return BestPurse;
     }
     public static void main(String[] args) {
-        array = new int[10][10];
+        Scanner scan = new Scanner(System.in);
+        numDenom = scan.nextInt();
+        Denom = new int[numDenom];
+        for(int i = 0; i < numDenom; i++){
+            Denom[i] = scan.nextInt();
+        }
+        numProblems = scan.nextInt();
+        problems = new int[numProblems];
+        for(int i = 0; i < numProblems; i++){
+            problems[i] = scan.nextInt();
+            if(size < problems[i]){
+                size = problems[i];
+            }
+        }
+        scan.close();
+        array = (CoinPurse[]) new Object[size + 1];
+        array[0] = new CoinPurse();
+        for(int i = 1; i < size + 2; i++){
+            array[i] = null;
+        }
     }
 }

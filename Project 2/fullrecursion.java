@@ -1,7 +1,10 @@
+import java.util.Scanner;
+
 public class fullrecursion{
     static int numDenom = 4;
     static int[] Denom = {1,7,17,37};
-    
+    static int numProblems;
+    static int[] problems;
     static CoinPurse NumCoins(Integer n){
         CoinPurse BestPurse = new CoinPurse();
         if(n == 0){
@@ -31,14 +34,27 @@ public class fullrecursion{
     }
     public static void printOutput(int n){
         CoinPurse total = NumCoins(n);
+        System.out.println("Value: " + n);
         System.out.println("Total coins: " + total.totalCoins);
         for(int i = 0; i < numDenom; i ++){
             System.out.println(Denom[i] + ": " + total.purse[i]);
         }
     }
     public static void main(String[] args) {
-        printOutput(5);
-       // printOutput(22);
-        printOutput(84);
+        Scanner scan = new Scanner(System.in);
+        numDenom = scan.nextInt();
+        Denom = new int[numDenom];
+        for(int i = 0; i < numDenom; i++){
+            Denom[i] = scan.nextInt();
+        }
+        numProblems = scan.nextInt();
+        problems = new int[numProblems];
+        for(int i = 0; i < numProblems; i++){
+            problems[i] = scan.nextInt();
+        }
+        scan.close();
+        for(int i = 0; i < numProblems; i++){
+            printOutput(problems[i]);
+        }
     }
 }
