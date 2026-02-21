@@ -39,6 +39,14 @@ public class bottomup {
         array[n] = BestPurse;
         return BestPurse;
     }
+     public static void printOutput(int n){
+        CoinPurse total = NumCoins(n);
+        System.out.println("Value: " + n);
+        System.out.println("Total coins: " + total.totalCoins);
+        for(int i = 0; i < numDenom; i ++){
+            System.out.println(Denom[i] + ": " + total.purse[i]);
+        }
+    }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         numDenom = scan.nextInt();
@@ -55,10 +63,13 @@ public class bottomup {
             }
         }
         scan.close();
-        array = (CoinPurse[]) new Object[size + 1];
+        array =  new CoinPurse[size + 1];
         array[0] = new CoinPurse();
-        for(int i = 1; i < size + 2; i++){
+        for(int i = 1; i < size + 1; i++){
             array[i] = null;
+        }
+        for(int i = 0; i < numProblems; i++){
+            printOutput(problems[i]);
         }
     }
 }
