@@ -1,7 +1,8 @@
-public class fullrecursion{
+public class bottomup {
     static int numDenom = 4;
     static int[] Denom = {1,7,17,37};
-    
+    static int[][] array;
+
     static CoinPurse NumCoins(Integer n){
         CoinPurse BestPurse = new CoinPurse();
         if(n == 0){
@@ -29,16 +30,7 @@ public class fullrecursion{
         BestPurse.purse[bestK]++;
         return BestPurse;
     }
-    public static void printOutput(int n){
-        CoinPurse total = NumCoins(n);
-        System.out.println("Total coins: " + total.totalCoins);
-        for(int i = 0; i < numDenom; i ++){
-            System.out.println(Denom[i] + ": " + total.purse[i]);
-        }
-    }
     public static void main(String[] args) {
-        printOutput(5);
-       // printOutput(22);
-        printOutput(84);
+        array = new int[10][10];
     }
 }
