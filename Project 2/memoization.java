@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class bottomup {
+public class memoization {
     static int numDenom;
     static int[] Denom;
     static CoinPurse[] array;
@@ -9,13 +9,13 @@ public class bottomup {
     static int size = 0;
 
     static CoinPurse NumCoins(Integer n){
-        if(array[n] != null){
+        if (array[n] != null){
             return array[n];
         }
         CoinPurse BestPurse = new CoinPurse();
-        if(n == 0){
-            return BestPurse;
-        }
+        //if(n == 0){
+        //    return BestPurse;
+        //}
         int bestNum = (int) Double.POSITIVE_INFINITY;
         Integer bestK = 0;
         for(int k = 0; k < numDenom; k++){
@@ -65,11 +65,12 @@ public class bottomup {
         scan.close();
         array =  new CoinPurse[size + 1];
         array[0] = new CoinPurse();
-        for(int i = 0; i < size + 1; i++){
-            array[i] = NumCoins(i);
+        for(int i = 1; i < size + 1; i++){
+            array[i] = null;
         }
         for(int i = 0; i < numProblems; i++){
             printOutput(problems[i]);
         }
     }
 }
+
