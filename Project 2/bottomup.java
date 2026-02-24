@@ -8,11 +8,11 @@ public class bottomup {
     static int[] problems;
     static int size = 0;
 
-    static CoinPurse NumCoins(Integer n){
+    static CoinPurse NumCoins(Integer n, int max){
         if(array[n] != null){
             return array[n];
         }
-        CoinPurse BestPurse = new CoinPurse();
+        CoinPurse BestPurse = new CoinPurse(max);
         if(n == 0){
             return BestPurse;
         }
@@ -23,7 +23,7 @@ public class bottomup {
             if(newVal < 0){
                 break;
             }
-            CoinPurse newPurse = NumCoins(newVal);
+            CoinPurse newPurse = NumCoins(newVal,max);
             Integer newCoins = newPurse.totalCoins + 1;
             if(newCoins < bestNum){
                 bestNum = newCoins;
@@ -39,13 +39,15 @@ public class bottomup {
         array[n] = BestPurse;
         return BestPurse;
     }
-     public static void printOutput(int n){
-        CoinPurse total = NumCoins(n);
-        System.out.println("Value: " + n);
-        System.out.println("Total coins: " + total.totalCoins);
+    public static void printOutput(int n,int max){
+        CoinPurse total = NumCoins(n, max);
+        System.out.print(n + " Cents = ");
         for(int i = 0; i < numDenom; i ++){
-            System.out.println(Denom[i] + ": " + total.purse[i]);
+            if(total.purse[i] > 0){
+                System.out.print(Denom[i] + ":" + total.purse[i] + " ");
+            }
         }
+        System.out.println();
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -64,12 +66,12 @@ public class bottomup {
         }
         scan.close();
         array =  new CoinPurse[size + 1];
-        array[0] = new CoinPurse();
+        array[0] = new CoinPurse(size);
         for(int i = 0; i < size + 1; i++){
-            array[i] = NumCoins(i);
+            array[i] = NumCoins(i,size);
         }
         for(int i = 0; i < numProblems; i++){
-            printOutput(problems[i]);
+            printOutput(problems[i],size);
         }
     }
 }

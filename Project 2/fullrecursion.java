@@ -34,11 +34,13 @@ public class fullrecursion{
     }
     public static void printOutput(int n){
         CoinPurse total = NumCoins(n);
-        System.out.println("Value: " + n);
-        System.out.println("Total coins: " + total.totalCoins);
+        System.out.print(n + " Cents = ");
         for(int i = 0; i < numDenom; i ++){
-            System.out.println(Denom[i] + ": " + total.purse[i]);
+            if(total.purse[i] > 0){
+                System.out.print(Denom[i] + ":" + total.purse[i] + " ");
+            }
         }
+        System.out.println();
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
