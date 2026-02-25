@@ -6,13 +6,13 @@ public class memoization {
     static CoinPurse[] array;
     static int numProblems;
     static int[] problems;
-    static int size = 0;
+   
 
-    static CoinPurse NumCoins(Integer n){
+    static CoinPurse NumCoins(Integer n, int max){
         if (array[n] != null){
             return array[n];
         }
-        CoinPurse BestPurse = new CoinPurse();
+        CoinPurse BestPurse = new CoinPurse(max);
         //if(n == 0){
         //    return BestPurse;
         //}
@@ -23,7 +23,7 @@ public class memoization {
             if(newVal < 0){
                 break;
             }
-            CoinPurse newPurse = NumCoins(newVal);
+            CoinPurse newPurse = NumCoins(newVal, max);
             Integer newCoins = newPurse.totalCoins + 1;
             if(newCoins < bestNum){
                 bestNum = newCoins;
@@ -39,17 +39,18 @@ public class memoization {
         array[n] = BestPurse;
         return BestPurse;
     }
-     public static void printOutput(int n){
-        CoinPurse total = NumCoins(n);
-        System.out.print(n + " Cents = ");
-        for(int i = 0; i < numDenom; i ++){
+     public static void printOutput(int n, int max){
+        CoinPurse total = NumCoins(n, max);
+        System.out.print(n + " cents =");
+        for(int i = numDenom - 1; i >=0; i --){
             if(total.purse[i] > 0){
-                System.out.print(Denom[i] + ":" + total.purse[i] + " ");
+                System.out.print(" " + Denom[i] + ":" + total.purse[i]);
             }
         }
         System.out.println();
     }
     public static void main(String[] args) {
+        int size = 0;
         Scanner scan = new Scanner(System.in);
         numDenom = scan.nextInt();
         Denom = new int[numDenom];
@@ -66,12 +67,12 @@ public class memoization {
         }
         scan.close();
         array =  new CoinPurse[size + 1];
-        array[0] = new CoinPurse();
+        array[0] = new CoinPurse(size);
         for(int i = 1; i < size + 1; i++){
             array[i] = null;
         }
         for(int i = 0; i < numProblems; i++){
-            printOutput(problems[i]);
+            printOutput(problems[i], size);
         }
     }
 }
