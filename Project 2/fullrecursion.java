@@ -5,8 +5,8 @@ public class fullrecursion{
     static int[] Denom = {1,7,17,37};
     static int numProblems;
     static int[] problems;
-    static CoinPurse NumCoins(Integer n){
-        CoinPurse BestPurse = new CoinPurse();
+    static CoinPurse NumCoins(Integer n, int max){
+        CoinPurse BestPurse = new CoinPurse(max);
         if(n == 0){
             return BestPurse;
         }
@@ -17,7 +17,7 @@ public class fullrecursion{
             if(newVal < 0){
                 break;
             }
-            CoinPurse newPurse = NumCoins(newVal);
+            CoinPurse newPurse = NumCoins(newVal, max);
             Integer newCoins = newPurse.totalCoins + 1;
             if(newCoins < bestNum){
                 bestNum = newCoins;
@@ -32,8 +32,8 @@ public class fullrecursion{
         BestPurse.purse[bestK]++;
         return BestPurse;
     }
-    public static void printOutput(int n){
-        CoinPurse total = NumCoins(n);
+    public static void printOutput(int n, int max){
+        CoinPurse total = NumCoins(n, max);
         System.out.print(n + " Cents = ");
         for(int i = 0; i < numDenom; i ++){
             if(total.purse[i] > 0){
@@ -44,6 +44,7 @@ public class fullrecursion{
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        int size = 0;
         numDenom = scan.nextInt();
         Denom = new int[numDenom];
         for(int i = 0; i < numDenom; i++){
@@ -53,10 +54,13 @@ public class fullrecursion{
         problems = new int[numProblems];
         for(int i = 0; i < numProblems; i++){
             problems[i] = scan.nextInt();
+            if( problems[i] > size){
+                size = problems[i];
+            }
         }
         scan.close();
         for(int i = 0; i < numProblems; i++){
-            printOutput(problems[i]);
+            printOutput(problems[i], size);
         }
     }
 }
