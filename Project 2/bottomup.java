@@ -9,13 +9,17 @@ public class bottomup {
     static int size = 0;
 
     static CoinPurse NumCoins(Integer n, int max){
+        // Check if array[n] is already computed
         if(array[n] != null){
             return array[n];
         }
+
+        // Base case for n = 0
         CoinPurse BestPurse = new CoinPurse(max);
         if(n == 0){
             return BestPurse;
         }
+
         int bestNum = (int) Double.POSITIVE_INFINITY;
         Integer bestK = 0;
         for(int k = 0; k < numDenom; k++){
@@ -34,44 +38,91 @@ public class bottomup {
                 }           
             }
         }
-        //NumCoins(n - bestK);
+        // NumCoins(n - bestK);
         BestPurse.purse[bestK]++;
+
+        // Best purse stored in array[n]
         array[n] = BestPurse;
         return BestPurse;
     }
     public static void printOutput(int n,int max){
+        long startTime = System.nanoTime(); 
         CoinPurse total = NumCoins(n, max);
+        long endTime = System.nanoTime();
+        long time = endTime - startTime;
+
         System.out.print(n + " cents =");
         for(int i = numDenom - 1; i >=0; i --){
             if(total.purse[i] > 0){
                 System.out.print(" " + Denom[i] + ":" + total.purse[i]);
             }
         }
+
+        // Print time
+        System.out.println("Time in ns: " + time);
         System.out.println();
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+
+        // Read in number of denominations
         numDenom = scan.nextInt();
         Denom = new int[numDenom];
+
+        // Read denominations
         for(int i = 0; i < numDenom; i++){
             Denom[i] = scan.nextInt();
         }
+
+        // Read number of problems
         numProblems = scan.nextInt();
         problems = new int[numProblems];
         for(int i = 0; i < numProblems; i++){
+            // Read target amounts
             problems[i] = scan.nextInt();
             if(size < problems[i]){
                 size = problems[i];
             }
         }
         scan.close();
+
+        // Memoization table
         array =  new CoinPurse[size + 1];
         array[0] = new CoinPurse(size);
+
+        // Compute subproblems
         for(int i = 0; i < size + 1; i++){
             array[i] = NumCoins(i,size);
         }
+
+        // Print results
         for(int i = 0; i < numProblems; i++){
             printOutput(problems[i],size);
         }
+
+        // TIMING
+        size = 0;
+        // Number of denominations
+        int[] Denom = {1, 5, 10, 25};        
+
+        // Read number of problems
+        int numProblems = 3;
+        int[] problems = {22, 45, 90};
+        for (int i = 0; i < numProblems; i++){
+            // Target amounts
+            if(size < problems[i]){
+                size = problems[i];
+            }
+        }
+
+        // Memoization table
+        array =  new CoinPurse[size + 1];
+        array[0] = new CoinPurse(size);
+
+        // Print results
+        for(int i = 0; i < numProblems; i++){
+            printOutput(problems[i],size);
+        }
+
     }
 }

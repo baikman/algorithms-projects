@@ -40,13 +40,20 @@ public class memoization {
         return BestPurse;
     }
      public static void printOutput(int n, int max){
+        long startTime = System.nanoTime(); 
         CoinPurse total = NumCoins(n, max);
+        long endTime = System.nanoTime();
+        long time = endTime - startTime;
+        
         System.out.print(n + " cents =");
         for(int i = numDenom - 1; i >=0; i --){
             if(total.purse[i] > 0){
                 System.out.print(" " + Denom[i] + ":" + total.purse[i]);
             }
         }
+
+        // Print time
+        System.out.println("Time in ns: " + time);
         System.out.println();
     }
     public static void main(String[] args) {
@@ -73,6 +80,26 @@ public class memoization {
         }
         for(int i = 0; i < numProblems; i++){
             printOutput(problems[i], size);
+        }
+
+        // TIMING
+        size = 0;
+        // Number of denominations
+        int[] Denom = {1, 5, 10, 25};        
+
+        // Read number of problems
+        int numProblems = 3;
+        int[] problems = {22, 45, 90};
+        for (int i = 0; i < numProblems; i++){
+            // Target amounts
+            if(size < problems[i]){
+                size = problems[i];
+            }
+        }
+        
+        // Print results
+        for(int i = 0; i < numProblems; i++){
+            printOutput(problems[i],size);
         }
     }
 }
