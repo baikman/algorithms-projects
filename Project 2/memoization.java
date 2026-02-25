@@ -44,7 +44,7 @@ public class memoization {
         CoinPurse total = NumCoins(n, max);
         long endTime = System.nanoTime();
         long time = endTime - startTime;
-        
+
         System.out.print(n + " cents =");
         for(int i = numDenom - 1; i >=0; i --){
             if(total.purse[i] > 0){
@@ -96,7 +96,11 @@ public class memoization {
                 size = problems[i];
             }
         }
-        
+
+        // Memoization table
+        array =  new CoinPurse[size + 1];
+        array[0] = new CoinPurse(size);
+
         // Print results
         for(int i = 0; i < numProblems; i++){
             printOutput(problems[i],size);
