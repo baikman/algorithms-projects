@@ -1,6 +1,7 @@
 class CoinPurse {
     int totalCoins = 0;
     int[] purse;
+    
     CoinPurse(int n){
         totalCoins = 0;
         purse = new int[n];
@@ -8,8 +9,8 @@ class CoinPurse {
             purse[i] = 0;
         }
     }
+
     CoinPurse(){
         this(0);
     }
-
 }
