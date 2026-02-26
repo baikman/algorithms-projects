@@ -59,6 +59,7 @@ public class bottomup {
                 System.out.print(" " + Denom[i] + ":" + total.purse[i]);
             }
         }
+        System.out.println();
     }
 
     public static void main(String[] args) {

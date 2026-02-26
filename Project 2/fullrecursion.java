@@ -41,9 +41,10 @@ public class fullrecursion{
         System.out.print(n + " cents =");
         for(int i = numDenom - 1; i >=0; i --){
             if(total.purse[i] > 0){
-                System.out.print(" " + Denom[i] + ":" + total.purse[i]);
+                System.out.println(" " + Denom[i] + ":" + total.purse[i]);
             }
         }
+        System.out.println();
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
