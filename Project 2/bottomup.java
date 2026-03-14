@@ -23,6 +23,7 @@ public class bottomup {
         int bestNum = (int) Double.POSITIVE_INFINITY;
         Integer bestK = 0;
         for(int k = 0; k < numDenom; k++){
+            //check each denomination to see if we may use it
             Integer newVal = n - Denom[k];
             if(newVal < 0){
                 break;
@@ -30,6 +31,7 @@ public class bottomup {
             CoinPurse newPurse = NumCoins(newVal,max);
             Integer newCoins = newPurse.totalCoins + 1;
             if(newCoins < bestNum){
+                //found a better option than those already checked
                 bestNum = newCoins;
                 bestK = k;
                 for(int i = 0; i < numDenom; i++){
@@ -45,16 +47,19 @@ public class bottomup {
         array[n] = BestPurse;
         return BestPurse;
     }
+    //n is the number we're printing, and max is the largest number we will be printing
     public static void printOutput(int n, int max){
         array = new CoinPurse[n + 1];
         array[0] = new CoinPurse(max);
         for (int i = 1; i <= n; i++) {
+            //calculate each value
             array[i] = NumCoins(i, max);
         }
         CoinPurse total = array[n];
 
         System.out.print(n + " cents =");
         for(int i = numDenom - 1; i >=0; i --){
+            //we only print nonzero values
             if(total.purse[i] > 0){
                 System.out.print(" " + Denom[i] + ":" + total.purse[i]);
             }

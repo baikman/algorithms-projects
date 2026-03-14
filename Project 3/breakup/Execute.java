@@ -1,4 +1,6 @@
+import java.util.List;
 import java.util.Scanner;
+import java.util.*;
 
 public class Execute {
     public static void main(String[] args){
@@ -12,8 +14,13 @@ public class Execute {
             int k = scan.nextInt();
             int l = scan.nextInt();
             Node[][][] array = new Node[n][m][l];
+            ArrayList<Integer>[] monarchies = new ArrayList[l];
             for(int j = 0; j < l; j++){
-                
+                monarchies[j] = new ArrayList<Integer>();
+                int p = scan.nextInt();
+                for(int o = 0; o < p; o++){
+                    monarchies[j].add(scan.nextInt());
+                }
             }
         }
         

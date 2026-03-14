@@ -1,4 +1,5 @@
 public class Node {
+    static int count;
     int key;
     int rank;
     Node parent;
@@ -33,8 +34,10 @@ public class Node {
             }
             a.setParent(b);
         }
+        count--;
     }
     Node makeSet(int i){
+        count++;
         return new Node(i);
 
 
