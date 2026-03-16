@@ -13,15 +13,15 @@ public class Execute {
             int m = scan.nextInt();
             int k = scan.nextInt();
             int l = scan.nextInt();
-            Node[][][] array = new Node[n][m][l];
-            ArrayList<Integer>[] monarchies = new ArrayList[l];
-            for(int j = 0; j < l; j++){
-                monarchies[j] = new ArrayList<Integer>();
-                int p = scan.nextInt();
-                for(int o = 0; o < p; o++){
-                    monarchies[j].add(scan.nextInt());
-                }
-            }
+ //           Node[][][] array = new Node[n][m][l];
+   //         ArrayList<Integer>[] monarchies = new ArrayList[l];
+ //           for(int j = l-1;  j > -1; j--){
+ //               monarchies[j] = new ArrayList<Integer>();
+ //               int p = scan.nextInt();
+ //               for(int o = 0; o < p; o++){
+ //                   monarchies[j].add(scan.nextInt());
+ //               }
+ //           }
         }
         
         
