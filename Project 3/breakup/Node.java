@@ -69,6 +69,19 @@ public class Node {
     static int[] findAdjacencies(Node a, int n, int m, int k){
         int val = a.key;
         int[] values = {val-1,val+1,val-n,val+n,val-(n*m),val+(n*m)};
+        if(val % n == 0){
+            values[0] = -1;
+        }
+        if(val % n == n-1){
+            values[1] = -1;
+        }
+        
+        if(val < n*m){
+            values[4] = -1;
+        }
+        if(val >= n*m*(k-1)){
+            values[5] = -1;
+        }
         return values;
     }
 
