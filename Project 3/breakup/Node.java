@@ -18,13 +18,16 @@ public class Node {
     void setParent(Node a){
         this.parent = a;
     }
-    Node findSet(Node current){
+    static Node findSet(Node current){
+        if(current == null){
+            return null;
+        }
         if(current.parent != current){
             current.parent = findSet(current.parent);
         }
         return current.parent;
     }
-    void unionSets(Node a, Node b){
+    static void unionSets(Node a, Node b){
         if (a.rank > b.rank){
             (b).setParent(a);
         }
@@ -36,11 +39,35 @@ public class Node {
         }
         count--;
     }
-    Node makeSet(int i){
+    static Node makeSet(int i){
         count++;
         return new Node(i);
 
 
         //we then need to check for unions
+    }
+    boolean areAdjacent(Node a, Node b, int n, int m, int k){
+        int distance = Math.abs(a.key - b.key);
+        return(distance ==1 || distance == n || distance == n*m);
+    }
+    static void checkAdjacencies(Node a, int n, int m, int k, Node[]array){
+        int[] adjacencies = findAdjacencies(a, n, m, k);
+        for(int i: adjacencies){
+            if(i >= 0 && i < n * m * k){
+                Node neighbour = findNode(i, array);
+                
+                if(neighbour != null && findSet(a) != findSet(neighbour)){
+                    unionSets(a, neighbour);
+                }
+            }
+        }
+    }
+    static int[] findAdjacencies(Node a, int n, int m, int k){
+        int val = a.key;
+        int[] values = {val-1,val+1,val-n,val+n,val-n*m,val+n*m};
+        return values;
+    }
+    static Node findNode(int n, Node[] array){
+        return array[n];
     }
 }
