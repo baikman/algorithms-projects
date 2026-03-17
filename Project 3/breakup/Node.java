@@ -75,7 +75,12 @@ public class Node {
         if(val % n == n-1){
             values[1] = -1;
         }
-        
+        if(val % (m*n) < n){
+            values[2] = -1;
+        }
+        if(val % (m*n) >= m* (n-1)){
+            values[3] = -1;
+        }
         if(val < n*m){
             values[4] = -1;
         }
