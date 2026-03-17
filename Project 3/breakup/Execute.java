@@ -11,25 +11,40 @@ public class Execute {
             int k = scan.nextInt();
             int l = scan.nextInt();
             Node[] array = new Node[n*m*k];
+            int[] unused = new int[n * m * k];
+            for(int i = 0; i < n * m * k; i ++){
+                unused[i] = i;
+            }
             Stack<int[]> dominionStack = new Stack<int[]>();
             for(int i = 0; i < l; i++){
                 int numDominions = scan.nextInt();
                 int[] storedDominions = new int[numDominions];
                 for(int j = 0; j < numDominions; j++){
-                    storedDominions[j] = scan.nextInt();
+                    int input = scan.nextInt();
+                    storedDominions[j] = input;
+                    unused[input] = -1;
                 }
                 dominionStack.push(storedDominions);
             }
-            while(!dominionStack.isEmpty()){
-                int[] dominionArray = dominionStack.pop();
-                for(int val: dominionArray){
+            for(int val : unused){
+                
+                if(val >= 0){
                     Node newNode = Node.makeSet(val);
                     array[val] = newNode;
                     Node.checkAdjacencies(newNode, n, m, k, array);
                 }
+            }
+            while(!dominionStack.isEmpty()){
                 if(Node.count > 1){
                         numMonths++;
                 }
+                int[] dominionArray = dominionStack.pop();
+                for(int val : dominionArray){
+                    Node newNode = Node.makeSet(val);
+                    array[val] = newNode;
+                    Node.checkAdjacencies(newNode, n, m, k, array);
+                }
+                
             }
 
 
@@ -42,6 +57,7 @@ public class Execute {
                     //Node.checkAdjacencies(newNode, n, m, k, array);
             //This shows the number of months things were not connected.
             System.out.println(numMonths);
+            scan.close();
             
             
  //           Node[][][] array = new Node[n][m][l];
