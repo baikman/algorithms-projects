@@ -20,9 +20,9 @@ public class Execute {
                     Node newNode = Node.makeSet(newKey);
                     array[newKey] = newNode;
                     Node.checkAdjacencies(newNode, n, m, k, array);
-                    if(Node.count > 1){
+                }
+                if(Node.count > 1){
                         numMonths++;
-                    }
                 }
             }
             System.out.println(numMonths);
