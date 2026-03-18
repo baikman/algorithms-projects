@@ -11,6 +11,9 @@ public class Execute {
             int k = scan.nextInt();
             int l = scan.nextInt();
             Node[] array = new Node[n*m*k];
+            for(int i = 0; i < n * m * k; i++){
+                array[i] = null;
+            }
             int[] unused = new int[n * m * k];
             for(int i = 0; i < n * m * k; i ++){
                 unused[i] = i;

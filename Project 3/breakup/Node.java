@@ -54,11 +54,11 @@ public class Node {
 
     static void checkAdjacencies(Node a, int n, int m, int k, Node[]array){
         int[] adjacencies = findAdjacencies(a, n, m, k);
-        Node representative = findSet(a);
+        
         for(int i: adjacencies){
             if(i >= 0 && i < n * m * k){
                 Node neighbour = findNode(i, array);
-                
+                Node representative = findSet(a);
                 if(neighbour != null && representative != findSet(neighbour)){
                     unionSets(representative, findSet(neighbour));
                 }
