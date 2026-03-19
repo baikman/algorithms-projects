@@ -21,6 +21,8 @@ Explain how you tested your program, enumerating the tests if possible.
 Explain why your test set was sufficient to believe that the software is working properly,
 i.e., what were the range of possibilities of errors that you were testing for.
 
+We used the test cases found in Gradel. These covered a range of problems and hence seemed to provide sufficient testing. When the test cases failed, we used the 
+
 # AI Use
 How did you use generative AI in this project?  Be specific!
 
