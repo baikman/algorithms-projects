@@ -106,9 +106,16 @@ public class Node {
         int[] adjacencies = findAdjacencies(a, n, m, k);
         
         for(int i: adjacencies){
+            //A negative number means that it's not a valid neighbour
+            //if it's bigger than n*m*k - 1, it's too big
             if(i >= 0 && i < n * m * k){
+                //store the neighbour
                 Node neighbour = array[i];
+
+                //representative is a's current representative
                 Node representative = findSet(a);
+
+                //two different valid sets
                 if(neighbour != null && representative != findSet(neighbour)){
                     unionSets(representative, findSet(neighbour));
                 }
@@ -123,11 +130,15 @@ public class Node {
      * @param k
      * 
      * Find adjacencies
-     * 
+     * Because of the single-dimensional array structure, we must increment/decrement by specific values
+     * Incrementing or decrementing by 1 moves in the n direction
+     * Incrementing or decrementing by n moves in the m direction
+     * Incrementing or decrementing by n*m moves in the k direction
      */ 
     static int[] findAdjacencies(Node a, int n, int m, int k){
         int val = a.key;
         int[] values = {val-1,val+1,val-n,val+n,val-(n*m),val+(n*m)};
+        //each if statement checks for an overflow error. If one would occur the value is set to -1 (null)
         if(val % n == 0){
             values[0] = -1;
         }
