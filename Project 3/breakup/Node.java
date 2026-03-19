@@ -3,30 +3,40 @@ public class Node {
     int key;
     int rank;
     Node parent;
+
+    // Node constructor with key and parent
     public Node(int i, Node p){
-        key=i;
+        key = i;
         parent = p;
         rank = 0;
     }
+
+    // Node constructor with key (set parent to self)
     public Node(int i){
         this(i,null);
         this.parent = this;
     }
-    public Node(){
 
-    }
+    // Default Node constructor
+    public Node(){}
+
+    // Set parent of Node to a
     void setParent(Node a){
         this.parent = a;
     }
+
+    // Find set of current node
     static Node findSet(Node current){
-        if(current == null){
+        if (current == null)
             return null;
-        }
-        if(current.parent != current){
+
+        if(current.parent != current)
             current.setParent(findSet(current.parent));
-        }
+
         return current.parent;
     }
+
+    // Union sets of two nodes
     static void unionSets(Node a, Node b){
         if (a.rank > b.rank){
             (b).setParent(a);
@@ -39,25 +49,20 @@ public class Node {
         }
         count--;
     }
+
+    // Create new set
     static Node makeSet(int i){
         count++;
         return new Node(i);
-
-
-        //we then need to check for unions
     }
 
-    //boolean areAdjacent(Node a, Node b, int n, int m, int k){
-    //    int distance = Math.abs(a.key - b.key);
-    //    return(distance ==1 || distance == n || distance == n*m);
-    //}
-
+    // 
     static void checkAdjacencies(Node a, int n, int m, int k, Node[]array){
         int[] adjacencies = findAdjacencies(a, n, m, k);
         
         for(int i: adjacencies){
             if(i >= 0 && i < n * m * k){
-                Node neighbour = findNode(i, array);
+                Node neighbour = array[i];
                 Node representative = findSet(a);
                 if(neighbour != null && representative != findSet(neighbour)){
                     unionSets(representative, findSet(neighbour));
@@ -88,9 +93,5 @@ public class Node {
             values[5] = -1;
         }
         return values;
-    }
-
-    static Node findNode(int n, Node[] array){
-        return array[n];
     }
 }
