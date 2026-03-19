@@ -1,4 +1,4 @@
-Project #3 <Galactic>
+Project #3 <Galactic Breakup>
 CS 3410– Spring 2026
 <Emmett Bicknell & Brandon Aikman>
 
