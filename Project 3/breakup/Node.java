@@ -1,3 +1,15 @@
+/**
+* Node
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Node.java
+* Created: March 2025
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: Implementation of Node class with disjoint set methods.
+*/
 public class Node {
     static int count;
     int key;
@@ -93,11 +105,11 @@ public class Node {
     }
 
     /**
-     * @param a
-     * @param n
-     * @param m
-     * @param k
-     * @param array
+     * @param a Node to check adjacencies on
+     * @param n n-value
+     * @param m m-value
+     * @param k k-value
+     * @param array Node array
      * 
      * Check for adjacencies
      * 
@@ -124,10 +136,10 @@ public class Node {
     }
 
     /**
-     * @param a
-     * @param n
-     * @param m
-     * @param k
+     * @param a Node to find adjacency of
+     * @param n n-value
+     * @param m m-value
+     * @param k k-value
      * 
      * Find adjacencies
      * Because of the single-dimensional array structure, we must increment/decrement by specific values
