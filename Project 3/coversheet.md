@@ -7,10 +7,12 @@ Note: You may not use generative AI to complete this coversheet.
 # Requirements
 Restate the problem specification, and any detailed requirements
 
+We were tasked with solving the Galactic Breakup problem using a disjoint set data structure. The Galactic Breakup problem describes a 3D 'empire' which breaks up into separate monarchies with a monarchy separating each month, and we need to determine the amount of months during the breakup that the empire is disconnected. The problem is given by a user inputting the size of the empire (n by m by k) and how many secessions will occur (l). Then, l lines follow which describe the count of dominions (p) and the dominions (d_i) leaving the empire for each month, in order. Because we utilized a disjoint set data structure, we also had to implement three methods: findSet, unionSets, makeSet, as referenced in Design.
+
 # Design
 How did you attack the problem? What choices did you make in your design, and why? Show class diagrams for more complex designs.
 
-To begin, we made a Node class. This class represents the disjoint sets, though because we used a node structure, we found that Node was a helpful name. This node implements each of the required disjoint set functions. We made sure to use path compression in the findSet method, as well as union by rank. These ensured optimal runtime. Once we had these functions created, we created the Execute class which reads in the input, puts it in the right order, and then performs the disjoint set operations.
+To begin, we made a Node class. This class represents the disjoint sets, though because we used a node structure, we found that Node was a helpful name. This node implements each of the required disjoint set methods. We made sure to use path compression in the findSet method, as well as union by rank. These ensured optimal runtime. Once we had these methods created, we created the Execute class which reads in the input, puts it in the right order, and then performs the disjoint set operations.
 
 # Security Analysis
 State the potential security vulnerabilities of your design. How could these vulnerabilities be exploited by an adversary? What would be the impact if the vulnerability is exploited?
