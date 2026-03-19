@@ -4,28 +4,53 @@ public class Node {
     int rank;
     Node parent;
 
-    // Node constructor with key and parent
+    /**
+     * @param i Node to create
+     * @param p Parent of Node
+     * 
+     * Node Constructor with key and parent
+     * 
+     */
     public Node(int i, Node p){
         key = i;
         parent = p;
         rank = 0;
     }
 
-    // Node constructor with key (set parent to self)
+    /**
+     * @param i Node to create
+     * 
+     * Node Constructor with key; sets parent to self
+     * 
+     */
     public Node(int i){
         this(i,null);
         this.parent = this;
     }
 
-    // Default Node constructor
+    /**
+     * 
+     * Default Node Constructor
+     * 
+     */
     public Node(){}
 
-    // Set parent of Node to a
+    /**
+     * @param a node to set parent to
+     * 
+     * Sets parent of Node to a
+     * 
+     */
     void setParent(Node a){
         this.parent = a;
     }
 
-    // Find set of current node
+    /**
+     * @param i node to create
+     * @return Node set of current node
+     * 
+     * Find set of current node
+     */
     static Node findSet(Node current){
         if (current == null)
             return null;
@@ -36,7 +61,13 @@ public class Node {
         return current.parent;
     }
 
-    // Union sets of two nodes
+    /**
+     * @param a first node to union
+     * @param b second node to union
+     * 
+     * Union two different sets
+     * 
+     */
     static void unionSets(Node a, Node b){
         if (a.rank > b.rank){
             (b).setParent(a);
@@ -50,13 +81,27 @@ public class Node {
         count--;
     }
 
-    // Create new set
+    /**
+     * @param i int to create set on
+     * 
+     * Create set of i
+     * 
+     */
     static Node makeSet(int i){
         count++;
         return new Node(i);
     }
 
-    // 
+    /**
+     * @param a
+     * @param n
+     * @param m
+     * @param k
+     * @param array
+     * 
+     * Check for adjacencies
+     * 
+     */ 
     static void checkAdjacencies(Node a, int n, int m, int k, Node[]array){
         int[] adjacencies = findAdjacencies(a, n, m, k);
         
@@ -71,6 +116,15 @@ public class Node {
         }
     }
 
+    /**
+     * @param a
+     * @param n
+     * @param m
+     * @param k
+     * 
+     * Find adjacencies
+     * 
+     */ 
     static int[] findAdjacencies(Node a, int n, int m, int k){
         int val = a.key;
         int[] values = {val-1,val+1,val-n,val+n,val-(n*m),val+(n*m)};
