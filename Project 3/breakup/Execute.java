@@ -1,5 +1,16 @@
 import java.util.*;
-
+/**
+* Execute
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Execute.java
+* Created: March 2025
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: Algorithm to solve the Galactic Breakup problem using disjoint sets.
+*/
 public class Execute {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
