@@ -3,6 +3,7 @@ import java.util.*;
 public class Execute {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
+        //count keeps track of how many disjoint sets there are
         Node.count = 0;
 
         int numMonths = 0;
@@ -40,7 +41,7 @@ public class Execute {
             dominionStack.push(storedDominions);
         }
         
-        // TODO: Comment
+        // The unused array adds any dominions that did not secede so that the process begins correctly
         for (int val : unused) {
             if (val >= 0) {
                 Node newNode = Node.makeSet(val);
@@ -51,11 +52,13 @@ public class Execute {
 
         // Build empire structure from last to leave to first to leave
         while (!dominionStack.isEmpty()) {
+            //there are >=2 disjoint sets
             if (Node.count > 1)
                 numMonths++;
     
             int[] dominionArray = dominionStack.pop();
 
+            //check each dominion that seceded this month
             for (int val : dominionArray) {
                 Node newNode = Node.makeSet(val);
                 array[val] = newNode;
