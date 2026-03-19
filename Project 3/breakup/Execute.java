@@ -3,6 +3,7 @@ import java.util.*;
 public class Execute {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
+        //count keeps track of how many disjoint sets there are
         Node.count = 0;
 
         int numMonths = 0;
