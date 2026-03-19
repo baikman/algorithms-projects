@@ -2,8 +2,6 @@ Project #3 <Galactic Breakup>
 CS 3410– Spring 2026
 <Emmett Bicknell & Brandon Aikman>
 
-Note: You may not use generative AI to complete this coversheet.
-
 # Requirements
 Restate the problem specification, and any detailed requirements
 
