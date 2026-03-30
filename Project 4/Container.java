@@ -1,8 +1,12 @@
 public class Container {
     String predecessor;
-    Integer distance;
+    Double distance;
     public Container(String newPredecessor){
         predecessor = newPredecessor;
-        distance = (Integer) Math.infinity;
+        distance = (Double.POSITIVE_INFINITY);
     }
+    public Container(){
+        this(null);
+    }
+
 }
