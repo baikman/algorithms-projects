@@ -1,7 +1,8 @@
 {
     "java.project.sourcePaths": [
+        "Project 3/breakup",
         "Project 2",
         "Project 1",
-        "Project 3/breakup"
+        "Project 4"
     ]
 }
