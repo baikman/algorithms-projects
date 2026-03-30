@@ -4,13 +4,15 @@ import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Map;
 public class Puzzle {
-    Container[][] array = new Container[6][6];
+    
     Boolean testState(String currstate){
         //test to see if red car is at the exit
         return true;
         //FIXME needs to be adjusted
     }
     public static void main(String[] args){
+        Container[][] array = new Container[6][6];
+        String[][] stateArray = new String[6][6];
         //input
         Scanner scan = new Scanner(System.in);
         Integer numCars = scan.nextInt();
@@ -35,7 +37,15 @@ public class Puzzle {
             }
             newCar.row = scan.nextInt();
             newCar.col = scan.nextInt();
-
+            
+            for(int j =0; j < newCar.length; j++){
+                if(newCar.isVertical){
+                    stateArray[newCar.col - 1][newCar.row - 1 + j] = newCar.colour;
+                }
+                else{
+                    stateArray[newCar.col - 1 + j][newCar.row - 1] = newCar.colour;
+                }
+            }
         }
         scan.close();
     }
