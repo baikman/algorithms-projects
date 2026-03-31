@@ -9,13 +9,17 @@ public class Puzzle {
         //test to see if red car is at the exit
         return currstate.contains("red35");
     }
+    private static void addAdjacencies(Car currentCar, boolean[] occupiedArray){
+        
+    }
 
     public static void main(String[] args){
         Container[][] array = new Container[6][6];
-        String[][] stateArray = new String[6][6];
+        boolean[][] occupiedArray = new boolean[6][6];
         //input
         Scanner scan = new Scanner(System.in);
         Integer numCars = scan.nextInt();
+        Car[] carArray = new Car[numCars];
         String currentString = "";
         Queue<String> statesToCheck = new LinkedList<String>();
         Map<String, Container> visitedStates = new HashMap<String, Container>();
@@ -37,13 +41,13 @@ public class Puzzle {
             }
             newCar.row = scan.nextInt();
             newCar.col = scan.nextInt();
-            
+            carArray[i] = newCar;
             for(int j =0; j < newCar.length; j++){
                 if(newCar.isVertical){
-                    stateArray[newCar.col - 1][newCar.row - 1+j] = newCar.colour;
+                    occupiedArray[newCar.col - 1][newCar.row - 1+j] = true;
                 }
                 else{
-                    stateArray[newCar.col - 1+j][newCar.row - 1] = newCar.colour;
+                    occupiedArray[newCar.col - 1+j][newCar.row - 1] = true;
                 }
             }
             currentString = currentString + newCar.colour + Integer.toString(newCar.row) + Integer.toString(newCar.col);
@@ -62,6 +66,9 @@ public class Puzzle {
             }
             //we haven't solved it yet
             //we need to find all adjacencies and add them to the queue
+            for(Car currentCar:carArray){
+                addAdjacencies(currentCar, occupiedArray);
+            }
         }
     }
 }
