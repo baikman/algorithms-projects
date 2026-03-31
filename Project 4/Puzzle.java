@@ -9,8 +9,22 @@ public class Puzzle {
         //test to see if red car is at the exit
         return currstate.contains("red35");
     }
-    private static void addAdjacencies(Car currentCar, boolean[] occupiedArray){
-        
+    private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<String> statesToCheck, Map<String, Container> visitedStates){
+        Car currentCar = carArray[curr];
+        if(currentCar.isVertical){
+            int i = currentCar.row-1;
+            while(i >= 0){
+                if(occupiedArray[i][currentCar.col]){
+                    break;
+                }
+                //in this case, we could move the car up.
+                
+            }
+            
+        }
+        else{
+
+        }
     }
 
     public static void main(String[] args){
@@ -66,8 +80,8 @@ public class Puzzle {
             }
             //we haven't solved it yet
             //we need to find all adjacencies and add them to the queue
-            for(Car currentCar:carArray){
-                addAdjacencies(currentCar, occupiedArray);
+            for(int i = 0; i < numCars; i++){
+                addAdjacencies(i, carArray, occupiedArray, statesToCheck, visitedStates);
             }
         }
     }
