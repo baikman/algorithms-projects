@@ -14,7 +14,7 @@ public class Puzzle {
         if(currentCar.isVertical){
             int i = currentCar.row-1;
             while(i >= 0){
-                if(occupiedArray[currentCar.col][i]){
+                if(occupiedArray[currentCar.col-1][i]){
                     break;
                 }
                 //in this case, we could move the car up.
@@ -35,7 +35,7 @@ public class Puzzle {
             }
             i = currentCar.row+1;
             while(i < 6){
-                if(occupiedArray[currentCar.col][i]){
+                if(occupiedArray[currentCar.col-1][i]){
                     break;
                 }
                 //in this case, we could move the car up.
@@ -59,7 +59,7 @@ public class Puzzle {
         else{
             int i = currentCar.col-1;
             while(i >= 0){
-                if(occupiedArray[i][currentCar.row]){
+                if(occupiedArray[i][currentCar.row-1]){
                     break;
                 }
                 //in this case, we could move the car left.
@@ -80,7 +80,7 @@ public class Puzzle {
             }
             i = currentCar.col+1;
             while(i < 6){
-                if(occupiedArray[i][currentCar.row]){
+                if(occupiedArray[i][currentCar.row-1]){
                     break;
                 }
                 //in this case, we could move the car up.
