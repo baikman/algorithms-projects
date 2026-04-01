@@ -1,8 +1,8 @@
 public class Container {
-    String predecessor;
+    String key;
     Double distance;
     public Container(String newPredecessor, double newDistance){
-        predecessor = newPredecessor;
+        key = newPredecessor;
         distance = newDistance;
     }
     public Container(String newPredecessor){
