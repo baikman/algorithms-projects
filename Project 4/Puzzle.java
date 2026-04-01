@@ -7,23 +7,98 @@ public class Puzzle {
     
     static Boolean testState(String currstate){
         //test to see if red car is at the exit
-        return currstate.contains("red35");
+        return currstate.contains("red 3 5");
     }
     private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<String> statesToCheck, Map<String, Container> visitedStates){
         Car currentCar = carArray[curr];
         if(currentCar.isVertical){
             int i = currentCar.row-1;
             while(i >= 0){
-                if(occupiedArray[i][currentCar.col]){
+                if(occupiedArray[currentCar.col][i]){
                     break;
                 }
                 //in this case, we could move the car up.
-                
+                String newState = "";
+                for(int k = 0; k < curr; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                newState = newState + " " + currentCar.colour + " " +  i + " " +  Integer.toString(currentCar.col);
+                for(int k = curr+1; k < 6; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                if(!visitedStates.containsKey(newState)){
+                    statesToCheck.add(newState);
+                }
+                i--;
+            }
+            i = currentCar.row+1;
+            while(i < 6){
+                if(occupiedArray[currentCar.col][i]){
+                    break;
+                }
+                //in this case, we could move the car up.
+                String newState = "";
+                for(int k = 0; k < curr; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                newState = newState + " " + currentCar.colour + " " +  i + " " +  Integer.toString(currentCar.col);
+                for(int k = curr+1; k < carArray.length; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                if(!visitedStates.containsKey(newState)){
+                    statesToCheck.add(newState);
+                }
+                i++;
             }
             
         }
         else{
-
+            int i = currentCar.col-1;
+            while(i >= 0){
+                if(occupiedArray[i][currentCar.row]){
+                    break;
+                }
+                //in this case, we could move the car left.
+                String newState = "";
+                for(int k = 0; k < curr; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                newState = newState + " " + currentCar.colour + " " +  Integer.toString(currentCar.row) + " " +  i;
+                for(int k = curr+1; k < carArray.length; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                if(!visitedStates.containsKey(newState)){
+                    statesToCheck.add(newState);
+                }
+                i--;
+            }
+            i = currentCar.col+1;
+            while(i < 6){
+                if(occupiedArray[i][currentCar.row]){
+                    break;
+                }
+                //in this case, we could move the car up.
+                String newState = "";
+                for(int k = 0; k < curr; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                newState = newState + " " + currentCar.colour + " " +  Integer.toString(currentCar.row) + " " +  i;
+                for(int k = curr+1; k < carArray.length; k++){
+                    Car tempCar = carArray[k];
+                    newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
+                }
+                if(!visitedStates.containsKey(newState)){
+                    statesToCheck.add(newState);
+                }
+                i++;
+            }
         }
     }
 
@@ -64,7 +139,7 @@ public class Puzzle {
                     occupiedArray[newCar.col - 1+j][newCar.row - 1] = true;
                 }
             }
-            currentString = currentString + newCar.colour + Integer.toString(newCar.row) + Integer.toString(newCar.col);
+            currentString = currentString + " " + newCar.colour + " " +  Integer.toString(newCar.row) + " " +  Integer.toString(newCar.col);
             
         }
         statesToCheck.add(currentString);
@@ -74,8 +149,25 @@ public class Puzzle {
         scan.close();
         while(!statesToCheck.isEmpty()){
             String currentState = statesToCheck.remove();
+            for(int i = 0; i < 6; i++){
+                for(int j = 0; j < 6; j++){
+                    occupiedArray[i][j] = false;
+                }
+            }
+            for(int i = 0; i < numCars; i++){
+                Car newCar = carArray[i];
+                for(int j =0; j < newCar.length; j++){
+                    if(newCar.isVertical){
+                        occupiedArray[newCar.col - 1][newCar.row - 1+j] = true;
+                    }
+                    else{
+                        occupiedArray[newCar.col - 1+j][newCar.row - 1] = true;
+                    }
+                }
+            }   
 //            System.out.println(currentState);
             if(testState(currentState)){
+                System.out.println("Solution found");
                 break;
             }
             //we haven't solved it yet
@@ -83,6 +175,7 @@ public class Puzzle {
             for(int i = 0; i < numCars; i++){
                 addAdjacencies(i, carArray, occupiedArray, statesToCheck, visitedStates);
             }
+
         }
     }
 }
