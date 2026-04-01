@@ -138,6 +138,7 @@ public class Puzzle {
             carArray[i] = newCar;
             for(int j =0; j < newCar.length; j++){
                 if(newCar.isVertical){
+
                     occupiedArray[newCar.row+j][newCar.col] = true;
                 }
                 else{
