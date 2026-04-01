@@ -9,7 +9,7 @@ public class Puzzle {
         //test to see if red car is at the exit
         return currstate.contains("red 3 5");
     }
-    private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<Container> statesToCheck, Map<String, Container> visitedStates, Double dist){
+    private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<Container> statesToCheck, Map<String, Container> visitedStates, Integer dist){
         Car currentCar = carArray[curr];
         if(currentCar.isVertical){
             int i = currentCar.row-1;
@@ -29,7 +29,7 @@ public class Puzzle {
                     newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
                 }
                 if(!visitedStates.containsKey(newState)){
-                    System.out.println("    Adding state " + newState);
+                    //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
                     visitedStates.put(newState, new Container(newState, dist+1));
                 }
@@ -52,7 +52,7 @@ public class Puzzle {
                     newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
                 }
                 if(!visitedStates.containsKey(newState)){
-                    System.out.println("    Adding state " + newState);
+                    //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
                     visitedStates.put(newState, new Container(newState, dist+1));
                 }
@@ -79,7 +79,7 @@ public class Puzzle {
                     newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
                 }
                 if(!visitedStates.containsKey(newState)){
-                    System.out.println("    Adding state " + newState);
+                    //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
                     visitedStates.put(newState, new Container(newState, dist+1));
                 }
@@ -102,7 +102,7 @@ public class Puzzle {
                     newState = newState + " " + tempCar.colour + " " +  Integer.toString(tempCar.row) + " " +  Integer.toString(tempCar.col);
                 }
                 if(!visitedStates.containsKey(newState)){
-                    System.out.println("    Adding state " + newState);
+                    //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
                     visitedStates.put(newState, new Container(newState, dist+1));
                 }
@@ -160,7 +160,7 @@ public class Puzzle {
         while(!statesToCheck.isEmpty()){
             Container currContainer = statesToCheck.remove();
             String currentState = currContainer.key;
-            Double dist = currContainer.distance;
+            Integer dist = currContainer.distance;
             for(int i = 1; i <= 6; i++){
                 for(int j = 1; j <= 6; j++){
                     occupiedArray[i][j] = false;
@@ -178,15 +178,27 @@ public class Puzzle {
                 }
             }   
 //            System.out.println(currentState);
-            System.out.println("Checking state " + currentState);
+           // System.out.println("Checking state " + currentState);
             if(testState(currentState)){
-                System.out.println("Solution found");
+                if(dist == 1){
+                    System.out.println("1 move");
+                }
+                else{
+                    System.out.println(dist + " moves");
+                }
+                //System.out.println("Solution found");
                 break;
             }
             //we haven't solved it yet
             //we need to find all adjacencies and add them to the queue
             for(int i = 0; i < numCars; i++){
-
+                Scanner carScan = new Scanner(currentState);
+                for(int j = 0; j < numCars; j++){
+                    carScan.next();
+                    carArray[j].row = carScan.nextInt();
+                    carArray[j].col = carScan.nextInt();
+                }
+                carScan.close();
                 addAdjacencies(i, carArray, occupiedArray, statesToCheck, visitedStates,dist);
             }
             

@@ -1,12 +1,12 @@
 public class Container {
     String key;
-    Double distance;
-    public Container(String newPredecessor, double newDistance){
+    Integer distance;
+    public Container(String newPredecessor, Integer newDistance){
         key = newPredecessor;
         distance = newDistance;
     }
     public Container(String newPredecessor){
-        this(newPredecessor, Double.POSITIVE_INFINITY);
+        this(newPredecessor, 0);
     }
     public Container(){
         this(null);
