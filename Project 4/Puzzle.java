@@ -31,6 +31,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(newState, dist+1));
                 }
                 i--;
             }
@@ -52,7 +53,8 @@ public class Puzzle {
                 }
                 if(!visitedStates.containsKey(newState)){
                     System.out.println("    Adding state " + newState);
-                    statesToCheck.add(new Container(newState, dist+1));;
+                    statesToCheck.add(new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(newState, dist+1));
                 }
                 i++;
             }
@@ -79,6 +81,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(newState, dist+1));
                 }
                 i--;
             }
@@ -101,6 +104,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(newState, dist+1));
                 }
                 i++;
             }
