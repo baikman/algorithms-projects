@@ -3,12 +3,25 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Map;
+/**
+* Puzzle
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Puzzle.java
+* Created: April 2026
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: Algorithm to solve the Rush Hour puzzle.
+*/
 public class Puzzle {
     
     static Boolean testState(String currstate){
         //test to see if red car is at the exit
         return currstate.contains("red 3 5");
     }
+
     private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<Container> statesToCheck, Map<String, Container> visitedStates, Double dist){
         Car currentCar = carArray[curr];
         if(currentCar.isVertical){
@@ -124,33 +137,21 @@ public class Puzzle {
         for(int i = 0; i < numCars; i++){
             Car newCar = new Car();
             String type = scan.next();
-            if(type.equals("car")){
-                newCar.length = 2;
-            }
-            else{
-                newCar.length = 3;
-            }
+            newCar.length = type.equals("car") ? 2 : 3;
             newCar.colour = scan.next();
-            if(scan.next().equals("h")){
-                newCar.isVertical = false;
-            }
-            else{
-                newCar.isVertical = true;
-            }
+            type = scan.next();
+            newCar.isVertical = type.equals("h") ? false : true;
             newCar.row = scan.nextInt();
             newCar.col = scan.nextInt();
             carArray[i] = newCar;
             for(int j =0; j < newCar.length; j++){
-                if(newCar.isVertical){
-
+                if(newCar.isVertical)
                     occupiedArray[newCar.row+j][newCar.col] = true;
-                }
-                else{
+                else
                     occupiedArray[newCar.row][newCar.col+j] = true;
-                }
             }
+
             currentString = currentString + " " + newCar.colour + " " +  Integer.toString(newCar.row) + " " +  Integer.toString(newCar.col);
-            
         }
         statesToCheck.add(new Container(currentString,0));
         Container newContainer = new Container(currentString, 0);

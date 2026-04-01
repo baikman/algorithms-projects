@@ -1,3 +1,15 @@
+/**
+* Container
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Puzzle.java
+* Created: April 2026
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: Container class.
+*/
 public class Container {
     String key;
     Double distance;
