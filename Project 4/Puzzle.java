@@ -9,7 +9,7 @@ public class Puzzle {
         //test to see if red car is at the exit
         return currstate.contains("red 3 5");
     }
-    private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<Container> statesToCheck, Map<String, Container> visitedStates, Integer dist){
+    private static void addAdjacencies(int curr, Car[] carArray, boolean[][] occupiedArray, Queue<Container> statesToCheck, Map<String, Container> visitedStates, Integer dist, String currState){
         Car currentCar = carArray[curr];
         if(currentCar.isVertical){
             int i = currentCar.row-1;
@@ -31,7 +31,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
-                    visitedStates.put(newState, new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(currState, dist+1));
                 }
                 i--;
             }
@@ -54,7 +54,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
-                    visitedStates.put(newState, new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(currState, dist+1));
                 }
                 i++;
             }
@@ -81,7 +81,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
-                    visitedStates.put(newState, new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(currState, dist+1));
                 }
                 i--;
             }
@@ -104,7 +104,7 @@ public class Puzzle {
                 if(!visitedStates.containsKey(newState)){
                     //System.out.println("    Adding state " + newState);
                     statesToCheck.add(new Container(newState, dist+1));
-                    visitedStates.put(newState, new Container(newState, dist+1));
+                    visitedStates.put(newState, new Container(currState, dist+1));
                 }
                 i++;
             }
@@ -153,7 +153,8 @@ public class Puzzle {
             
         }
         statesToCheck.add(new Container(currentString,0));
-        Container newContainer = new Container(currentString, 0);
+        visitedStates.put(currentString, new Container(currentString,0));
+        //Container newContainer = new Container(currentString, 0);
         //visitedStates.put(currentString,newContainer);
         //at this point we've loaded the initial board state. Now, we need to solve it.
         scan.close();
@@ -186,6 +187,13 @@ public class Puzzle {
                 else{
                     System.out.println(dist + " moves");
                 }
+                while(visitedStates.containsKey(currentState)){
+                    System.out.println(currentState);
+                    Container newCont = visitedStates.remove(currentState);
+                    System.out.println(newCont.distance);
+                    currentState = newCont.key;
+                }
+                System.out.println(currentState);
                 //System.out.println("Solution found");
                 break;
             }
@@ -199,10 +207,10 @@ public class Puzzle {
                     carArray[j].col = carScan.nextInt();
                 }
                 carScan.close();
-                addAdjacencies(i, carArray, occupiedArray, statesToCheck, visitedStates,dist);
+                addAdjacencies(i, carArray, occupiedArray, statesToCheck, visitedStates,dist, currentState);
             }
             
-            visitedStates.put(currentState, new Container(currentState, dist));
+            //visitedStates.put(currentState, new Container(currentState, dist));
         }
     }
 }
