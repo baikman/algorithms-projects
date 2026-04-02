@@ -28,9 +28,10 @@ public class bfs {
         }
         return convertedArray;
     }
-    static int[][] stateArray = new int[7][7];
-    static String currentString = "";
+    
     public static void main(String[] args) {
+        int[][] stateArray = new int[7][7];
+        String currentString = "";
         Scanner scan = new Scanner(System.in);
         
         int numCars = scan.nextInt();
@@ -78,6 +79,18 @@ public class bfs {
             }
         }
         System.out.println(currentString);
-        
+        //statesToCheck hold the states that we still need to check
+        Queue<Node> statesToCheck = new LinkedList<Node>();
+
+        //foundStates stores the states that are adjacent to some state we've visited
+        Map<String, String> foundStates = new HashMap<String, String>();
+        Node firstNode = new Node(currentString, null, 0, null);
+        statesToCheck.add(firstNode);
+        foundStates.put(currentString, currentString);
+
+
+        while(!statesToCheck.isEmpty()){
+            Node currentState = statesToCheck.remove();
+        }
     }
 }
