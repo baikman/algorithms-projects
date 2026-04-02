@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class bfs {
-    String convertArrayToString(int[][] currentArray){
+    static String convertArrayToString(int[][] currentArray){
         String convertedString = "";
         for(int i = 1; i < 7; i++){
             for(int j = 1; j < 7; j++){
@@ -14,7 +14,7 @@ public class bfs {
         }
         return convertedString;
     }
-    int[][] convertStringToArray(String currentString){
+    static int[][] convertStringToArray(String currentString){
         Scanner scan = new Scanner(currentString);
         int[][] convertedArray = new int[7][7];
         for(int i = 0; i < 7; i++){
@@ -26,6 +26,7 @@ public class bfs {
                 convertedArray[i][j] = scan.nextInt();
             }
         }
+        scan.close();
         return convertedArray;
     }
     
@@ -91,6 +92,40 @@ public class bfs {
 
         while(!statesToCheck.isEmpty()){
             Node currentState = statesToCheck.remove();
+            currentString = currentState.key;
+            int[][] currentStringArray = convertStringToArray(currentString);
+            for(int currentCarNumber = 0; currentCarNumber < numCars; currentCarNumber++){
+                //we need to find where the current car is
+                int currentrow = 0;
+                int currentcol = 0;
+                for(int i = 1; i < 7; i++){
+                    Boolean found = false;
+                    for(int j = 1; j < 7; j++){
+                        if(currentStringArray[i][j] == currentCarNumber){
+                            found = true;
+                            currentrow = i;
+                            currentcol = j;
+                            break;
+                        }
+                    }
+                    if(found){
+                        break;
+                    }
+                }
+                //currentrow and currentcol currently store the leftmost or highest end of the car.
+                //now we need to find where the car can move
+                boolean currentVertical = listOfCars[currentCarNumber].isVertical;
+                int currentlength = listOfCars[currentCarNumber].length;
+                if(currentVertical){
+                    //the car is currently vertical
+                    for(int i = 0; i < currentlength; i++){
+                        
+                    }
+                }
+                else{
+
+                }
+            }
         }
     }
 }
