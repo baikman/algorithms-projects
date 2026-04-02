@@ -1,3 +1,15 @@
+/**
+* Car
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Puzzle.java
+* Created: April 2026
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: Car class.
+*/
 public class Car {
     //length is determined by car or truck
     int length;
