@@ -95,6 +95,16 @@ public class bfs {
             currentString = currentState.key;
             int currentDistance = currentState.height;
             int[][] currentStringArray = convertStringToArray(currentString);
+            if(currentStringArray[3][6] == 0){
+                System.out.println("Solution found");
+                if(currentDistance == 1){
+                    System.out.println("1 move");
+                }
+                else{
+                    System.out.println(currentDistance + " moves");
+                }
+                break;
+            }
             for(int currentCarNumber = 0; currentCarNumber < numCars; currentCarNumber++){
                 //we need to find where the current car is
                 int currentrow = 0;
@@ -126,12 +136,12 @@ public class bfs {
                     }
                     String zeroedString = convertArrayToString(tempState);
                     int i = currentrow - 1;
-                    while(i > 0 && tempState[i][currentcol] >= 0){
+                    while(i > 0 && tempState[i][currentcol] < 0){
                         //we may move the car up
                         int[][] addingState = convertStringToArray(zeroedString);
                         for(int j = 0; j < currentlength; j++){
                             //move the car
-                            addingState[currentrow + i][currentcol] = currentCarNumber;
+                            addingState[i + j][currentcol] = currentCarNumber;
                         }
                         //car moved; add it to the map and maybe the queue
                         String newString = convertArrayToString(addingState);
@@ -140,16 +150,18 @@ public class bfs {
                             //we create a node containing the key, height, the move, and the parent
                             Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
                             statesToCheck.add(nodeToAdd);
+                            //System.out.println("Adding state" + newString);
                         }
                         foundStates.put(newString,newString);
+                        i--;
                     }
                     i = currentrow +currentlength;
-                    while(i <= 7-currentlength && tempState[i][currentcol] >= 0){
+                    while(i <= 7-currentlength && tempState[i][currentcol] < 0){
                         //we may move the car down
                         int[][] addingState = convertStringToArray(zeroedString);
                         for(int j = 0; j < currentlength; j++){
                             //move the car
-                            addingState[currentrow + i][currentcol] = currentCarNumber;
+                            addingState[i + j-currentlength + 1][currentcol] = currentCarNumber;
                         }
                         //car moved; add it to the map and maybe the queue
                         String newString = convertArrayToString(addingState);
@@ -158,14 +170,62 @@ public class bfs {
                             //we create a node containing the key, height, the move, and the parent
                             Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
                             statesToCheck.add(nodeToAdd);
+                            //System.out.println("Adding state" + newString);
                         }
                         foundStates.put(newString,newString);
+                        i++;
                     }
                 }
 
                 else{
                     //in this case, we have a horizontal car
-                    
+                    int[][] tempState = convertStringToArray(currentString);
+                    for(int i = 0; i < currentlength; i++){
+                        
+                        tempState[currentrow][currentcol+i] = -1;
+                    }
+                    String zeroedString = convertArrayToString(tempState);
+                    int i = currentcol - 1;
+                    while(i > 0 && tempState[currentrow][i] < 0){
+                        //we may move the car up
+                        int[][] addingState = convertStringToArray(zeroedString);
+                        for(int j = 0; j < currentlength; j++){
+                            //move the car
+                            addingState[currentrow][i+j] = currentCarNumber;
+                        }
+                        //car moved; add it to the map and maybe the queue
+                        String newString = convertArrayToString(addingState);
+                        if(!foundStates.containsKey(newString)){
+                            //we need to add this to the queue
+                            //we create a node containing the key, height, the move, and the parent
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            statesToCheck.add(nodeToAdd);
+                            //System.out.println("Adding state" + newString);
+                        }
+                        foundStates.put(newString,newString);
+                        
+                        i--;
+                    }
+                    i = currentcol +currentlength;
+                    while(i <= 7-currentlength && tempState[currentrow][i] < 0){
+                        //we may move the car down
+                        int[][] addingState = convertStringToArray(zeroedString);
+                        for(int j = 0; j < currentlength; j++){
+                            //move the car
+                            addingState[currentrow][i+j-currentlength + 1] = currentCarNumber;
+                        }
+                        //car moved; add it to the map and maybe the queue
+                        String newString = convertArrayToString(addingState);
+                        if(!foundStates.containsKey(newString)){
+                            //we need to add this to the queue
+                            //we create a node containing the key, height, the move, and the parent
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            statesToCheck.add(nodeToAdd);
+                            //System.out.println("Adding state" + newString);
+                        }
+                        foundStates.put(newString,newString);
+                        i++;
+                    }
                 }
             }
         }
