@@ -15,12 +15,30 @@ public class Node {
     Node parent;
     Integer height;
     String move;
+
+    /**
+     * @param newkey Key for node
+     * @param newparent Parent of node
+     * @param newheight Height of node
+     * @param newmove Move for node
+     * 
+     * Node constructor
+     * 
+     */
     public Node(String newkey, Node newparent, Integer newheight, String newmove){
         key = newkey;
         parent = newparent;
         height = newheight;
         move = newmove;
     }
+    
+    /**
+     * @param newkey Key for node
+     * @param newparent Parent of node
+     * 
+     * Node constructor
+     * 
+     */
     public Node(String newkey, Node newparent){
         this(newkey, newparent, newparent.height, null);
     }
