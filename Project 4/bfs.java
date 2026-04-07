@@ -1,9 +1,23 @@
 import java.util.Scanner;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Stack;
+/**
+* BFS
+*
+* @author Emmett Bicknell, Brandon Aikman
+* @version 1.0
+* File: Puzzle.java
+* Created: April 2026
+* Summary of Modifications: First version
+* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+*
+* Description: BFS approach to the Rush Hour puzzle.
+*/
 public class bfs {
     static String convertArrayToString(int[][] currentArray){
         String convertedString = "";
@@ -103,6 +117,14 @@ public class bfs {
                 else{
                     System.out.println(currentDistance + " moves");
                 }
+                Stack<String> moveStack = new Stack<>();
+                while (currentState.parent != null) {
+                    moveStack.push(currentState.move);
+                    currentState = currentState.parent;
+                }
+                while (!moveStack.isEmpty()) {
+                    System.out.println(moveStack.pop());
+                }
                 break;
             }
             for(int currentCarNumber = 0; currentCarNumber < numCars; currentCarNumber++){
@@ -148,7 +170,8 @@ public class bfs {
                         if(!foundStates.containsKey(newString)){
                             //we need to add this to the queue
                             //we create a node containing the key, height, the move, and the parent
-                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            String move = listOfCars[currentCarNumber].colour + " " + Integer.toString(currentrow - i) + " U";
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,move);
                             statesToCheck.add(nodeToAdd);
                             //System.out.println("Adding state" + newString);
                         }
@@ -168,7 +191,8 @@ public class bfs {
                         if(!foundStates.containsKey(newString)){
                             //we need to add this to the queue
                             //we create a node containing the key, height, the move, and the parent
-                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            String move = listOfCars[currentCarNumber].colour + " " + Integer.toString(i - currentlength + 1 - currentrow) + " D";
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,move);
                             statesToCheck.add(nodeToAdd);
                             //System.out.println("Adding state" + newString);
                         }
@@ -198,7 +222,8 @@ public class bfs {
                         if(!foundStates.containsKey(newString)){
                             //we need to add this to the queue
                             //we create a node containing the key, height, the move, and the parent
-                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            String move = listOfCars[currentCarNumber].colour + " " + Integer.toString(currentcol - i) + " L";
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,move);
                             statesToCheck.add(nodeToAdd);
                             //System.out.println("Adding state" + newString);
                         }
@@ -219,7 +244,8 @@ public class bfs {
                         if(!foundStates.containsKey(newString)){
                             //we need to add this to the queue
                             //we create a node containing the key, height, the move, and the parent
-                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            String move = listOfCars[currentCarNumber].colour + " " + Integer.toString(i - currentlength + 1 - currentcol) + " R";
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,move);
                             statesToCheck.add(nodeToAdd);
                             //System.out.println("Adding state" + newString);
                         }
