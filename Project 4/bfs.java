@@ -93,6 +93,7 @@ public class bfs {
         while(!statesToCheck.isEmpty()){
             Node currentState = statesToCheck.remove();
             currentString = currentState.key;
+            int currentDistance = currentState.height;
             int[][] currentStringArray = convertStringToArray(currentString);
             for(int currentCarNumber = 0; currentCarNumber < numCars; currentCarNumber++){
                 //we need to find where the current car is
@@ -118,12 +119,53 @@ public class bfs {
                 int currentlength = listOfCars[currentCarNumber].length;
                 if(currentVertical){
                     //the car is currently vertical
+                    int[][] tempState = convertStringToArray(currentString);
                     for(int i = 0; i < currentlength; i++){
                         
+                        tempState[currentrow+i][currentcol] = -1;
+                    }
+                    String zeroedString = convertArrayToString(tempState);
+                    int i = currentrow - 1;
+                    while(i > 0 && tempState[i][currentcol] >= 0){
+                        //we may move the car up
+                        int[][] addingState = convertStringToArray(zeroedString);
+                        for(int j = 0; j < currentlength; j++){
+                            //move the car
+                            addingState[currentrow + i][currentcol] = currentCarNumber;
+                        }
+                        //car moved; add it to the map and maybe the queue
+                        String newString = convertArrayToString(addingState);
+                        if(!foundStates.containsKey(newString)){
+                            //we need to add this to the queue
+                            //we create a node containing the key, height, the move, and the parent
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            statesToCheck.add(nodeToAdd);
+                        }
+                        foundStates.put(newString,newString);
+                    }
+                    i = currentrow +currentlength;
+                    while(i <= 7-currentlength && tempState[i][currentcol] >= 0){
+                        //we may move the car down
+                        int[][] addingState = convertStringToArray(zeroedString);
+                        for(int j = 0; j < currentlength; j++){
+                            //move the car
+                            addingState[currentrow + i][currentcol] = currentCarNumber;
+                        }
+                        //car moved; add it to the map and maybe the queue
+                        String newString = convertArrayToString(addingState);
+                        if(!foundStates.containsKey(newString)){
+                            //we need to add this to the queue
+                            //we create a node containing the key, height, the move, and the parent
+                            Node nodeToAdd = new Node(newString,currentState,currentDistance+1,"");
+                            statesToCheck.add(nodeToAdd);
+                        }
+                        foundStates.put(newString,newString);
                     }
                 }
-                else{
 
+                else{
+                    //in this case, we have a horizontal car
+                    
                 }
             }
         }
