@@ -6,7 +6,7 @@
 * File: Puzzle.java
 * Created: April 2026
 * Summary of Modifications: First version
-* ©Copyright Cedarville University, its Computer Science faculty, and the author.
+* Copyright Cedarville University, its Computer Science faculty, and the author.
 *
 * Description: Car class.
 */

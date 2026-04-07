@@ -79,7 +79,7 @@ public class bfs {
                 currentString += stateArray[i][j] + " ";
             }
         }
-        System.out.println(currentString);
+        //System.out.println(currentString);
         //statesToCheck hold the states that we still need to check
         Queue<Node> statesToCheck = new LinkedList<Node>();
 
@@ -96,7 +96,7 @@ public class bfs {
             int currentDistance = currentState.height;
             int[][] currentStringArray = convertStringToArray(currentString);
             if(currentStringArray[3][6] == 0){
-                System.out.println("Solution found");
+               // System.out.println("Solution found");
                 if(currentDistance == 1){
                     System.out.println("1 move");
                 }
@@ -156,7 +156,7 @@ public class bfs {
                         i--;
                     }
                     i = currentrow +currentlength;
-                    while(i <= 7-currentlength && tempState[i][currentcol] < 0){
+                    while(i <= 6 && tempState[i][currentcol] < 0){
                         //we may move the car down
                         int[][] addingState = convertStringToArray(zeroedString);
                         for(int j = 0; j < currentlength; j++){
@@ -207,7 +207,7 @@ public class bfs {
                         i--;
                     }
                     i = currentcol +currentlength;
-                    while(i <= 7-currentlength && tempState[currentrow][i] < 0){
+                    while(i <= 6 && tempState[currentrow][i] < 0){
                         //we may move the car down
                         int[][] addingState = convertStringToArray(zeroedString);
                         for(int j = 0; j < currentlength; j++){
