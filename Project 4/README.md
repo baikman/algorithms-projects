@@ -23,6 +23,52 @@ Explain how you tested your program, enumerating the tests if possible.
 Explain why your test set was sufficient to believe that the software is working properly,
 i.e., what were the range of possibilities of errors that you were testing for.
 
+There were about four main types of tests we used. Two common tests were 1 car red h 3 5, which simply tests if it can correctly identify a solved state, and 1 car red h 3 2, which checks to see if it can correctly move the red car to the end.
+We also used tests like 2 car red h 3 1 truck blue v 6 5, which tests to see if the algorithm can move a vehicle out of the way and then move the red car to the finish.
+
+We also used the provided example problem, 8
+car
+red
+h
+3
+2
+car
+lime
+h
+1
+1
+truck
+purple
+v
+2
+1
+car
+orange
+v
+5
+1
+truck
+blue
+v
+2
+4
+truck
+yellow
+v
+1
+6
+car
+lightblue
+h
+5
+5
+truck
+aqua
+h
+6
+3.
+
+Finally, once our program was showing promise, we used the Gradel test cases.
 
 # AI Use
 How did you use generative AI in this project?  Be specific!
@@ -32,14 +78,15 @@ We did not use generative AI on this project.
 # Summary/Conclusion
 Present your results. Did it work properly? Are there any limitations? If it is an analysis-type project, this section may be significantly longer than for a simple implementation-type project.
 
-
+Our project works properly. Gradel said we passed 5 out of 7 tests. However, our output for the two tests that were marked as failing was exactly the same as the desired output. We check it character-by-character and they were identical. We talked to Dr. G about this, and he said that the likely reason for this is that Gradel timed out when running these test cases.
+One limitation to our solution is that if posssible runtime is very limited, our code may exceed desired runtime for certain input cases.
 
 # Lessons Learned
 List any lessons learned, especially in regards to AI use.
 
-
+This project reinforced the lesson that it is very important to carefully plan out your approach before you start writing lines of code. It also was a reminder that it can be very helpful to make sketches to visualize what's going on, and to sanity-check the code.
 
 # Time Spent
 Approximately how much time did you spend on this project?
 
-We spent about X hours on this project. (I spent like 4-5)
+Emmett spend about 15-20 hours on this project. Brandon spent like 4-5
