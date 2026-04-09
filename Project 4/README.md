@@ -5,10 +5,12 @@ CS 3410– Spring 2026
 # Requirements
 Restate the problem specification, and any detailed requirements
 
-We were tasked with solving the Rush Hour problem utilizing a BFS approach.
+We were tasked with solving the Rush Hour problem utilizing a BFS approach. We had to print out the minimum number of moves as well as the moves taken to reach the solution. Our game board was a 6 x 6 matrix with the exit being the right edge of the third row. For this puzzle, there were two vehicle types, cars (2 long) and trucks (3 long), each 1 wide. Vehicles could be oriented horizontallly or vertically, and would remain as such for the remainder of the puzzle.
 
 # Design
 How did you attack the problem? What choices did you make in your design, and why? Show class diagrams for more complex designs.
+
+As instructed, we used a breadth-first search approach. We had three key classes: Car, Node, and bfs. bfs handled our puzzle logic and solution implementation. Car allowed us to cleanly store information about each car, such as its length, color, orientation, and more. Finally, Node allowed us to store different BFS states, consisting of a key which represented its current state, a parent Node, its height, and its move. We utilized a 7 x 7 matrix to make indexing easier. Additionally, we had two helper functions to convert the state array into a String and vice versa, which proved helpful for initializing Nodes.  
 
 # Security Analysis
 State the potential security vulnerabilities of your design. How could these vulnerabilities be exploited by an adversary? What would be the impact if the vulnerability is exploited?
@@ -17,6 +19,8 @@ There are no known security vulnerabilities. The program cannot run any terminal
 
 # Implementation
 Outline any interesting implementation details.
+
+We used a Queue (Java LinkedList implementation) for holding the states to check. We also used a HashMap to keep track of found states, which allowed us to cleanly check if a state had been visited or not. Finally, we used a Stack to push all moves of the solution into in reverse order, then popped them off to reveal the order of moves from start to end. This project highlighted the importance of using different data structures to solve an algorithm and also showed that understanding what data structure is best applied to a certain type of problem is crucial for solving problems efficiently.
 
 # Testing
 Explain how you tested your program, enumerating the tests if possible.
@@ -89,4 +93,4 @@ This project reinforced the lesson that it is very important to carefully plan o
 # Time Spent
 Approximately how much time did you spend on this project?
 
-Emmett spend about 15-20 hours on this project. Brandon spent like 4-5
+Emmett spend about 15-20 hours on this project. Brandon spent 6.
