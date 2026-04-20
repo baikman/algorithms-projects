@@ -42,17 +42,6 @@ public class Execution {
             predecessorMatrix[b][a] = b;
         }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (predecessorMatrix[i][j] == Integer.MAX_VALUE) {
-                    System.out.print("NIL ");
-                } else {
-                    System.out.print(predecessorMatrix[i][j] + " ");
-                }
-            }
-            System.out.println();
-        }
-
         double[][] origMatrix = weightMatrix;
 
         City[] cityArray = new City[k1];                 // cityArray stores all cities
@@ -84,29 +73,6 @@ public class Execution {
                 }
             }
         }
-        System.out.println("Orginal Matrix");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(origMatrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("Weight Matrix");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(weightMatrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("Predecessor Matrix");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(predecessorMatrix[i][j] + " ");
-            }
-            System.out.println();
-        }
 
         for (int i = 0; i < s; i++) {
             Sign sign = signs[i];
@@ -117,22 +83,37 @@ public class Execution {
 
             for (int j = 0; j < k1; j++) {
                 City city = cityArray[j];
-                
-                if (predecessorMatrix[firstInter][city.index] != Integer.MAX_VALUE) {
-                    double dist = 0.0;
+
+                if ((predecessorMatrix[firstInter][city.index] != Integer.MAX_VALUE)) {
+                    boolean isOptimal = false;
                     int temp = city.index;
                     int predecessor = predecessorMatrix[firstInter][temp];
-                    
-                    while (predecessor != firstInter) {
-                        dist += origMatrix[predecessor][temp];
-                        temp = predecessor;
-                        predecessor = predecessorMatrix[firstInter][predecessor];
-                    }
-                    dist += origMatrix[firstInter][secondInter];
 
-                    sign.cityArray[cityCount] = city;
-                    sign.distanceArray[cityCount] = dist - sign.distance;
-                    sign.cityCount = ++cityCount;
+                    if (secondInter == temp) isOptimal = true;
+                    else {
+                        while (predecessor != firstInter) {
+                            if (predecessor == secondInter) isOptimal = true;
+                            temp = predecessor;
+                            predecessor = predecessorMatrix[firstInter][predecessor];
+                        }
+                    }
+                    
+                    if (isOptimal) {
+                        double dist = 0.0;
+                        temp = city.index;
+                        predecessor = predecessorMatrix[firstInter][temp];
+                        
+                        while (predecessor != firstInter) {
+                            dist += origMatrix[predecessor][temp];
+                            temp = predecessor;
+                            predecessor = predecessorMatrix[firstInter][predecessor];
+                        }
+                        dist += origMatrix[firstInter][secondInter];
+
+                        sign.cityArray[cityCount] = city;
+                        sign.distanceArray[cityCount] = dist - sign.distance;
+                        sign.cityCount = ++cityCount;
+                    }
                 }
             }
         }

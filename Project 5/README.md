@@ -42,6 +42,43 @@ List any lessons learned, especially in regards to AI use.
 # Time Spent
 Approximately how much time did you spend on this project?
 
+
+Gradel test case 1:
+8 17 4
+0 1 7.12
+0 2 8.34
+0 3 5.33
+0 4 5.36
+1 2 4.21
+1 6 6.99
+1 7 10.26
+2 3 2.74
+2 6 5.04
+3 4 4.12
+3 5 7.72
+3 6 5.71
+4 5 8.94
+4 6 10.29
+5 6 5.47
+5 7 8.55
+6 7 6.01
+0 Allentown
+1 Bobtown
+6 Charlestown
+7 Downville
+3
+0 3 2.17
+3 2 0.45
+4 3 3.14
+
+Gradel test case 2:
+2 1 1
+0 1 10.0
+1 Target
+1
+0 1 2.5
+
+Gradel test case 3:
 2 1 2
 0 1 10.0
 1 Target
@@ -50,7 +87,7 @@ Approximately how much time did you spend on this project?
 0 1 2.6
 1 0 4.3
 
-
+Gradel test case 4:
 10 17 5
 0 1 5.2
 0 4 7.7
