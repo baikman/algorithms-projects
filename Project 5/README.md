@@ -1,4 +1,4 @@
-Project #5 <Raods Scholar>
+Project #5 <Roads Scholar>
 CS 3410– Spring 2026
 <Emmett Bicknell & Brandon Aikman>
 
