@@ -87,7 +87,7 @@ public class Execution {
                     int temp = city.index;
                     int predecessor = predecessorMatrix[firstInter][temp];
 
-                    if (predecessorMatrix[predecessor][firstInter] == secondInter) {
+                    if (predecessorMatrix[predecessor][firstInter] == secondInter || secondInter == temp) {
                         double dist = 0.0;
                         temp = city.index;
                         predecessor = predecessorMatrix[firstInter][temp];
@@ -110,7 +110,7 @@ public class Execution {
         // print signs
         for (Sign sign : signs) {
             sign.printSign();
-            if (sign != signs[signs.length - 1]) System.out.println();
+            if (sign != signs[signs.length - 1]) System.out.print("\n\n");
         }
     }
 }
