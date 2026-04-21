@@ -20,7 +20,7 @@ public class Execution {
         int m = scan.nextInt();                         // m represents the total number of roads
         int k1 = scan.nextInt();                        // k1 is the number of cities
         double[][] weightMatrix = new double[n][n];     // weightMatrix stores the weights of each road
-        int[][] predecessorMatrix = new int[n][n];// predecessorMatrix stores predecessors
+        int[][] predecessorMatrix = new int[n][n];      // predecessorMatrix stores predecessors
         
         // Initialize weightMatrix and predecessorMatrix
         for (int i = 0; i < n; i++) {
@@ -78,27 +78,16 @@ public class Execution {
             Sign sign = signs[i];
             int firstInter = sign.firstIntersection;
             int secondInter = sign.secondIntersection;
-            double distance = sign.distance;
             int cityCount = 0;
 
             for (int j = 0; j < k1; j++) {
                 City city = cityArray[j];
 
                 if ((predecessorMatrix[firstInter][city.index] != Integer.MAX_VALUE)) {
-                    boolean isOptimal = false;
                     int temp = city.index;
                     int predecessor = predecessorMatrix[firstInter][temp];
 
-                    if (secondInter == temp) isOptimal = true;
-                    else {
-                        while (predecessor != firstInter) {
-                            if (predecessor == secondInter) isOptimal = true;
-                            temp = predecessor;
-                            predecessor = predecessorMatrix[firstInter][predecessor];
-                        }
-                    }
-                    
-                    if (isOptimal) {
+                    if (predecessorMatrix[predecessor][firstInter] == secondInter) {
                         double dist = 0.0;
                         temp = city.index;
                         predecessor = predecessorMatrix[firstInter][temp];
@@ -119,6 +108,9 @@ public class Execution {
         }
         
         // print signs
-        for (Sign sign : signs) sign.printSign();   
+        for (Sign sign : signs) {
+            sign.printSign();
+            if (sign != signs[signs.length - 1]) System.out.println();
+        }
     }
 }

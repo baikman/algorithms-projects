@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
 /**
 * Sign
 *
@@ -35,9 +38,17 @@ public class Sign {
     }
 
     public void printSign() {
+        Map<Integer, String> signMap = new HashMap<>();
+
         for (int i = 0; i < cityCount; i++) {
-            System.out.println(cityArray[i].name + " " + (int) Math.round(distanceArray[i]));
+            signMap.put((int) Math.round(distanceArray[i]), cityArray[i].name);
         }
-        System.out.println();
+
+        Arrays.sort(distanceArray);
+        
+        for (int i = 0; i < cityCount; i++) {
+            System.out.printf("%-20s%d", signMap.get((int) Math.round(distanceArray[i])), (int) Math.round(distanceArray[i]));
+            if (i != cityCount - 1) System.out.println();
+        }
     }
 }
