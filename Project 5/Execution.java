@@ -21,7 +21,7 @@ public class Execution {
         double[][] weightMatrix = new double[n][n];     // weightMatrix stores the weights of each road
         int[][] predecessorMatrix = new int[n][n];      // predecessorMatrix stores predecessors
         
-        // Set weightMatrix and predecessorMatrix to "infinity"
+        // Set all of weightMatrix and predecessorMatrix to "infinity"
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 weightMatrix[i][j] = (i == j) ? 0 : Double.MAX_VALUE;
@@ -78,12 +78,12 @@ public class Execution {
             Sign sign = signs[i];
             int firstInter = sign.firstIntersection;
             int secondInter = sign.secondIntersection;
-            int cityCount = 0;
+            int cityCount = 0;                          // cityCount tracks the amount of cities posted on a sign
 
             for (int j = 0; j < k1; j++) {
-                City city = cityArray[j];
+                City city = cityArray[j];               // city which we evaluate adding to sign
 
-                // If path exists
+                // If path exists from the first intersection to the city
                 if ((predecessorMatrix[firstInter][city.index] != Integer.MAX_VALUE)) {
                     int temp = city.index;
                     int predecessor = predecessorMatrix[firstInter][temp];
@@ -91,8 +91,9 @@ public class Execution {
                     // If road is part of optimal path, add to sign
                     if (predecessorMatrix[predecessor][firstInter] == secondInter || secondInter == temp) {
                         sign.cityArray[cityCount] = city;
+                        // Distance is shortest path from firstInter to city minus the distance of the sign from firstInter
                         sign.distanceArray[cityCount] = weightMatrix[firstInter][city.index] - sign.distance;
-                        sign.cityCount = ++cityCount;
+                        sign.cityCount = ++cityCount; // Pre-increment and update cityCount
                     }
                 }
             }
