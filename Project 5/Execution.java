@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 /**
 * Execution
 *
@@ -22,7 +21,7 @@ public class Execution {
         double[][] weightMatrix = new double[n][n];     // weightMatrix stores the weights of each road
         int[][] predecessorMatrix = new int[n][n];      // predecessorMatrix stores predecessors
         
-        // Initialize weightMatrix and predecessorMatrix
+        // Set weightMatrix and predecessorMatrix to "infinity"
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 weightMatrix[i][j] = (i == j) ? 0 : Double.MAX_VALUE;
@@ -30,6 +29,7 @@ public class Execution {
             }
         }
 
+        // Set weightMatrix^(0) and predecessorMatrix^(0)
         for (int i = 0; i < m; i++) {
             int a = scan.nextInt();
             int b = scan.nextInt();
@@ -42,9 +42,7 @@ public class Execution {
             predecessorMatrix[b][a] = b;
         }
 
-        double[][] origMatrix = weightMatrix;
-
-        City[] cityArray = new City[k1];                 // cityArray stores all cities
+        City[] cityArray = new City[k1];                // cityArray stores all cities
 
         for (int i = 0; i < k1; i++) {
             int index = scan.nextInt();
@@ -60,8 +58,10 @@ public class Execution {
             double dist = scan.nextDouble();
             signs[i] = new Sign(firstInter, secondInter, dist, k1);
         }
+        
+        scan.close();
 
-        // Modified Floyd-Warshall implementation of APSP (p657)
+        // Modified Floyd-Warshall implementation of APSP which includes the predecessorMatrix (p657)
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 for (int k = 0; k < n; k++) {
@@ -83,10 +83,12 @@ public class Execution {
             for (int j = 0; j < k1; j++) {
                 City city = cityArray[j];
 
+                // If path exists
                 if ((predecessorMatrix[firstInter][city.index] != Integer.MAX_VALUE)) {
                     int temp = city.index;
                     int predecessor = predecessorMatrix[firstInter][temp];
 
+                    // If road is part of optimal path, add to sign
                     if (predecessorMatrix[predecessor][firstInter] == secondInter || secondInter == temp) {
                         sign.cityArray[cityCount] = city;
                         sign.distanceArray[cityCount] = weightMatrix[firstInter][city.index] - sign.distance;
@@ -96,7 +98,7 @@ public class Execution {
             }
         }
         
-        // print signs
+        // Print signs
         for (Sign sign : signs) {
             sign.printSign();
             if (sign != signs[signs.length - 1]) System.out.print("\n\n");

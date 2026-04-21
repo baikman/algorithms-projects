@@ -38,6 +38,11 @@ public class Sign {
         for (int i = 0; i < numCities; i++) distanceArray[i] = Integer.MAX_VALUE;
     }
 
+    /**
+     * 
+     * Prints all cities off from sign in order of distance using a HashMap
+     * 
+     */
     public void printSign() {
         Map<Integer, String> signMap = new HashMap<>();
         for (int i = 0; i < cityCount; i++) {
