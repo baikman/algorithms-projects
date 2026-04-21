@@ -88,19 +88,8 @@ public class Execution {
                     int predecessor = predecessorMatrix[firstInter][temp];
 
                     if (predecessorMatrix[predecessor][firstInter] == secondInter || secondInter == temp) {
-                        double dist = 0.0;
-                        temp = city.index;
-                        predecessor = predecessorMatrix[firstInter][temp];
-                        
-                        while (predecessor != firstInter) {
-                            dist += origMatrix[predecessor][temp];
-                            temp = predecessor;
-                            predecessor = predecessorMatrix[firstInter][predecessor];
-                        }
-                        dist += origMatrix[firstInter][secondInter];
-
                         sign.cityArray[cityCount] = city;
-                        sign.distanceArray[cityCount] = dist - sign.distance;
+                        sign.distanceArray[cityCount] = weightMatrix[firstInter][city.index] - sign.distance;
                         sign.cityCount = ++cityCount;
                     }
                 }
