@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.HashMap;
 import java.util.Arrays;
 /**
@@ -39,15 +40,18 @@ public class Sign {
 
     public void printSign() {
         Map<Integer, String> signMap = new HashMap<>();
-
+        PriorityQueue<Node> signQueue = new PriorityQueue<>();
         for (int i = 0; i < cityCount; i++) {
             signMap.put((int) Math.round(distanceArray[i]), cityArray[i].name);
+            signQueue.add(new Node((int) Math.round(distanceArray[i]),cityArray[i].name));
         }
 
         Arrays.sort(distanceArray);
         
         for (int i = 0; i < cityCount; i++) {
-            System.out.printf("%-20s%d", signMap.get((int) Math.round(distanceArray[i])), (int) Math.round(distanceArray[i]));
+            //System.out.printf("%-20s%d", signMap.get((int) Math.round(distanceArray[i])), (int) Math.round(distanceArray[i]));
+            Node removedNode = signQueue.remove();
+            System.out.printf("%-20s%d", removedNode.name, removedNode.distance);
             if (i != cityCount - 1) System.out.println();
         }
     }
